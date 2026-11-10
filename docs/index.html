@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이준하 ♥ 김진아 결혼합니다</title>
+<meta name="description" content="2027년 3월 20일 토요일 오후 3시 30분, 라루체 그레이스홀. 두 사람의 작은 마을로 초대합니다.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f3ecdf">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://sigimogi1234.github.io/wedding/">
+<meta property="og:title" content="이준하 ♥ 김진아 결혼합니다">
+<meta property="og:description" content="2027년 3월 20일 토요일 오후 3시 30분, 라루체 그레이스홀. 두 사람의 작은 마을로 초대합니다.">
+<meta property="og:image" content="https://sigimogi1234.github.io/wedding/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="이준하 ♥ 김진아 결혼합니다">
+<meta name="twitter:description" content="2027년 3월 20일 토요일 오후 3시 30분, 라루체 그레이스홀. 두 사람의 작은 마을로 초대합니다.">
+<meta name="twitter:image" content="https://sigimogi1234.github.io/wedding/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2396695b'/%3E%3Cpath d='M16 24s-8-5-8-11a4.500 4.500 0 0 1 8-2.800A4.500 4.500 0 0 1 24 13c0 6-8 11-8 11z' fill='%23fbf7ee'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Layout concept: an architect's paper model of a small town, seen from above, on the wedding day. */
+  #scene { position: absolute; inset: 0; overflow: hidden; touch-action: none; background: var(--grain), #eaecdd; }
+  #scene svg { pointer-events: none; }
+  #world { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; will-change: transform; }
+  #world > * { position: absolute; pointer-events: none; }
+  .grain-over { position: absolute; inset: 0; z-index: 15; background: var(--grain); pointer-events: none; opacity: .5; }
+
+  .fig { width: 44px; height: 88px; margin: -85px 0 0 -22px; }
+  .fig .inner { position: relative; width: 100%; height: 100%; transform-origin: 50% 100%; }
+  .fig::before { content: ""; position: absolute; left: 8px; bottom: -3px; width: 28px; height: 9px; border-radius: 50%; background: rgba(70, 58, 46, .22); }
+  .fig.left .inner { transform: scaleX(-1); }
+  #me { transition: opacity .25s; }
+  #me.gone { opacity: 0; }
+  #me.walk .inner { animation: step .19s ease-in-out infinite alternate; }
+  #me.walk .l1 { animation: leg .19s ease-in-out infinite alternate; }
+  #me.walk .l2 { animation: leg .19s ease-in-out infinite alternate-reverse; }
+  .l1, .l2 { transform-box: fill-box; transform-origin: 50% 0; }
+  @keyframes step { from { translate: 0 0; } to { translate: 0 -2px; } }
+  @keyframes leg { from { transform: rotate(-11deg); } to { transform: rotate(11deg); } }
+  #me.left.walk .inner { transform: scaleX(-1); }
+
+  .fig.guest .inner { animation: sway 2.4s ease-in-out infinite alternate; }
+  @keyframes sway { from { rotate: -2.5deg; } to { rotate: 2.5deg; } }
+  .fig.open .inner { animation: sway 2.4s ease-in-out infinite alternate, hop .42s ease-out 1; }
+  @keyframes hop { 40% { translate: 0 -14px; } }
+  .say { position: absolute; left: 50%; bottom: calc(100% + 6px); width: 40px; height: 40px; margin-left: -20px; display: grid; place-items: center; border-radius: 50%; background: var(--paper-hi); box-shadow: 0 2px 6px rgba(70, 58, 46, .2); animation: bob 1.8s ease-in-out infinite alternate; }
+  .say svg { width: 25px; height: 25px; }
+  .say::after { content: ""; position: absolute; left: 50%; top: 100%; margin: -1px 0 0 -5px; border: 5px solid transparent; border-top-color: var(--paper-hi); border-bottom: 0; }
+  .fig.open .say { box-shadow: 0 0 0 2px var(--brass); }
+  @keyframes bob { to { translate: 0 -5px; } }
+
+  .plaque { padding: 2px 16px; border-radius: 18px; background: rgba(251, 247, 238, .95); box-shadow: 0 2px 0 var(--line); font: 20px/1.5 var(--display); white-space: nowrap; transform: translateX(-50%); z-index: 3000; }
+  .plaque i { display: none; margin-right: 4px; color: var(--brass); font-style: normal; }
+  .plaque.done i { display: inline; }
+
+  .door-mark { width: 46px; height: 27px; margin: -13px 0 0 -23px; border: 1.5px dashed var(--brass); border-radius: 50%; z-index: 2; transition: background .2s, border-style .2s; }
+  .door-mark.near { border-style: solid; background: rgba(167, 138, 92, .28); }
+
+  .mark { align-self: center; font: 16px/1 var(--display); letter-spacing: .04em; text-shadow: 0 0 6px var(--paper-hi), 0 0 2px var(--paper-hi); }
+  .chip.icon { width: 44px; justify-content: center; padding: 0; }
+  .chip.icon span { display: none; }
+
+  /* 이동은 터치, 입장은 건물 터치 또는 문 앞 버튼 */
+  #tint, #snowcover { left: -760px; top: -320px; width: 1520px; height: 2120px; }
+  #tint { z-index: 2500; }
+  #snowcover { z-index: 1; display: none; background: rgba(255, 255, 255, .55); }
+  .lights, .glow { display: none; z-index: 2600; }
+  #world.nightfall .prop { filter: brightness(.66) saturate(.85); }
+  #world.nightfall .house { filter: brightness(.95); }
+  #world.lit .lights, #world.lit .glow { display: block; }
+  .glow { width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 50%; background: radial-gradient(rgba(255, 225, 150, .6), rgba(255, 225, 150, 0) 68%); }
+  #fx { position: absolute; inset: 0; z-index: 14; width: 100%; height: 100%; pointer-events: none; }
+  .ff { position: absolute; z-index: 14; display: none; width: 6px; height: 6px; border-radius: 50%; background: #ffe9a8; box-shadow: 0 0 10px 3px rgba(255, 228, 150, .75); pointer-events: none; animation: drift 7s ease-in-out infinite alternate, blink 2.3s ease-in-out infinite alternate; }
+  .app.night .ff { display: block; }
+  .app.night .petal, .app.wet .petal { display: none; }
+  @keyframes drift { to { transform: translate(46px, -64px); } }
+  @keyframes blink { to { opacity: .25; } }
+  .app.night .mark { color: var(--paper-hi); text-shadow: 0 1px 4px rgba(20, 24, 50, .6); }
+  .guide-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; }
+  .guide-row svg { flex: 0 0 34px; width: 34px; height: 34px; }
+  .guide-row p { margin: 0; min-width: 0; font-size: 16px; line-height: 1.5; }
+  #route { left: 0; top: 0; width: 1px; height: 1px; overflow: visible; z-index: 3; }
+  #route polyline { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: .1 17; animation: march .55s linear infinite; }
+  @keyframes march { to { stroke-dashoffset: -17.1; } }
+  #dest { width: 44px; height: 60px; margin: -56px 0 0 -22px; z-index: 4; }
+  #dest svg { display: block; width: 100%; height: 100%; animation: pin .6s ease-in-out infinite alternate; }
+  @keyframes pin { to { transform: translateY(-8px); } }
+  .plaque.target { background: var(--accent); color: var(--paper-hi); box-shadow: none; }
+  .foot { width: 9px; height: 5px; margin: -2px 0 0 -4px; border-radius: 50%; background: #b8a58b; opacity: 0; z-index: 2; }
+  .rip { width: 80px; height: 46px; margin: -23px 0 0 -40px; border: 2px solid var(--accent); border-radius: 50%; z-index: 3; }
+  .bit { width: 11px; height: 11px; margin: -5px; border-radius: 50% 0; z-index: 3050; }
+  .float { animation: float 3.4s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+  @keyframes float { from { transform: rotate(-3deg); } to { transform: rotate(3deg) translateY(-6px); } }
+  .drop { animation: drip 1.5s ease-in infinite; }
+  @keyframes drip { from { transform: translate(0, 0); opacity: .9; } to { transform: translate(var(--x), 54px); opacity: 0; } }
+
+  .petal { position: absolute; z-index: 14; top: -24px; width: 10px; height: 10px; border-radius: 60% 0; pointer-events: none; opacity: .75; animation: fall linear infinite; }
+  @keyframes fall { from { transform: translate(0, 0) rotate(0); } 50% { transform: translate(34px, 52vh) rotate(170deg); } to { transform: translate(-20px, 106vh) rotate(350deg); } }
+
+  #ticker { position: absolute; z-index: 19; left: 50%; top: 62px; width: min(320px, calc(100% - 32px)); padding: 8px 14px; border-radius: 12px; background: rgba(251, 247, 238, .94); box-shadow: 0 2px 10px rgba(70, 58, 46, .14); font: 15px/1.45 var(--display); text-align: center; opacity: 0; transform: translate(-50%, -8px); transition: opacity .2s, transform .2s; pointer-events: none; }
+  #ticker.on { opacity: 1; transform: translate(-50%, 0); }
+  #ticker small { display: block; color: var(--ink-soft); font: 12px/1.5 var(--body); }
+
+  #act { position: absolute; z-index: 21; right: 18px; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); width: 96px; height: 96px; padding: 6px; border-radius: 50%; background: var(--accent); color: var(--paper-hi); box-shadow: 0 4px 12px rgba(70, 58, 46, .28); font: 16px/1.3 var(--display); transition: opacity .18s, transform .18s; }
+  #act small { display: block; margin-bottom: 2px; color: #f5ead6; font: 13px/1.3 var(--body); }
+  #act[data-off="1"] { opacity: 0; transform: scale(.7); pointer-events: none; }
+  #places { position: absolute; z-index: 20; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); min-height: 44px; border-radius: 22px; background: rgba(251, 247, 238, .82); transform: translateX(-50%); }
+  .place-row { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 54px; padding: 0 2px; border-bottom: 1px solid var(--line); text-align: left; }
+  .place-row b { font: 17px/1.4 var(--display); font-weight: 400; }
+  .place-row span { color: var(--ink-soft); font-size: 14px; }
+  .place-row.done span { color: var(--brass); }
+
+  /* 봉투 → 편지 → 양쪽으로 열려 마을로 이어지는 한 장면 */
+  #intro { position: absolute; inset: 0; z-index: 40; background: var(--grain), var(--paper); }
+  #intro.clear { background: none; }
+  .env { position: absolute; left: 50%; top: 50%; width: 310px; height: 208px; margin: -104px 0 0 -155px; transition: transform .75s cubic-bezier(.5, 0, .7, .3), opacity .6s; }
+  .env.away { transform: translateY(70vh); opacity: 0; }
+  .env-back { position: absolute; inset: 0; z-index: 1; background: #d8cbb5; box-shadow: 0 14px 30px rgba(70, 58, 46, .2); }
+  .env-front { position: absolute; inset: 0; z-index: 3; background: var(--grain), #e6dbc7; clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%); }
+  .flap { position: absolute; inset: 0 0 auto; height: 128px; z-index: 4; background: var(--grain), #dfd2bc; clip-path: polygon(0 0, 100% 0, 50% 100%); transform: perspective(900px) rotateX(0); transform-origin: top; transition: transform .55s, z-index 0s .27s; }
+  .seal { position: absolute; z-index: 5; left: 50%; top: 96px; width: 62px; height: 62px; margin-left: -31px; border-radius: 50%; background: var(--accent); box-shadow: inset 0 0 0 3px rgba(251, 247, 238, .2), 0 3px 8px rgba(64, 57, 51, .3); color: var(--paper-hi); font: italic 30px/58px var(--latin); text-align: center; transition: opacity .25s, scale .25s; animation: seal 1.6s ease-in-out infinite alternate; }
+  @keyframes seal { to { scale: 1.07; } }
+  .env.open .flap { transform: perspective(900px) rotateX(180deg); z-index: 0; }
+  .env.open .seal { opacity: 0; animation: none; scale: 1.4; pointer-events: none; }
+  .env-note { position: absolute; left: 0; right: 0; top: calc(50% + 136px); margin: 0; color: var(--ink-soft); font-size: 15px; text-align: center; transition: opacity .3s; }
+
+  #paper { position: absolute; z-index: 2; transition: top 1s cubic-bezier(.3, .8, .3, 1), clip-path 1s cubic-bezier(.3, .8, .3, 1); }
+  #paper.grow { clip-path: none !important; z-index: 6; transition: left .8s cubic-bezier(.4, 0, .2, 1), top .8s cubic-bezier(.4, 0, .2, 1), width .8s cubic-bezier(.4, 0, .2, 1), height .8s cubic-bezier(.4, 0, .2, 1); }
+  .leaf { position: absolute; top: 0; bottom: 0; width: 50.2%; background: var(--grain), var(--paper-hi); transition: transform 1.05s cubic-bezier(.5, 0, .25, 1), opacity .4s .65s; }
+  .leaf.l { left: 0; transform-origin: 0 50%; }
+  .leaf.r { right: 0; transform-origin: 100% 50%; }
+  #paper.gate .leaf.l { transform: perspective(1100px) rotateY(100deg); opacity: 0; }
+  #paper.gate .leaf.r { transform: perspective(1100px) rotateY(-100deg); opacity: 0; }
+  .frame { position: absolute; inset: 7px; border: 1px solid var(--brass); pointer-events: none; transition: inset .8s, opacity .25s; }
+  #paper.grow .frame { inset: 14px; }
+  .invite { position: absolute; left: 0; right: 0; top: 50%; display: grid; justify-items: center; gap: 3px; text-align: center; transform: translateY(-50%); transition: top .8s cubic-bezier(.4, 0, .2, 1), transform .8s cubic-bezier(.4, 0, .2, 1), opacity .25s; }
+  #paper.grow .invite { top: 46px; transform: none; }
+  .invite em { font: italic 19px/1.2 var(--latin); color: var(--brass); }
+  .invite b { font: 25px/1.5 var(--display); font-weight: 400; }
+  .invite span { font-size: 13.5px; color: var(--ink-soft); }
+  .chooser { position: absolute; left: 36px; right: 36px; top: 172px; bottom: 38px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 4vh, 34px); opacity: 0; visibility: hidden; transition: opacity .5s; }
+  #paper.ready .chooser { opacity: 1; visibility: visible; }
+  #paper.gate .chooser, #paper.gate .invite, #paper.gate .frame { opacity: 0; transition: opacity .25s; }
+  .chooser h2 { margin: 0; font: 20px/1.5 var(--display); font-weight: 400; text-align: center; }
+  .pick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 100%; }
+  .pick button { height: clamp(92px, 20vh, 150px); padding: 10px 7px 6px; border: 1px solid transparent; border-radius: 3px; transition: transform .2s; }
+  .pick button[aria-pressed="true"] { border-color: var(--brass); background: var(--paper); transform: translateY(-4px); }
+  @media (max-height: 560px) { .invite em { display: none; } #paper.grow .invite { top: 30px; } .chooser { top: 136px; bottom: 28px; } }
+  .chooser .btn { flex: 0 0 auto; width: 100%; }
+  #landing { position: absolute; z-index: 45; transition: left 1.05s cubic-bezier(.45, 0, .2, 1), top 1.05s cubic-bezier(.45, 0, .2, 1), width 1.05s cubic-bezier(.45, 0, .2, 1), height 1.05s cubic-bezier(.45, 0, .2, 1); pointer-events: none; }
+</style>
+
+</head>
+<body>
+<div class="app" id="app">
+  <div id="scene"><div id="world"></div></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="grain-over"></div>
+  <div id="ticker" role="status"></div>
+  <div class="top">
+    <div style="display:flex;gap:6px"><button class="chip icon" id="music"></button><button class="chip icon" id="guide" aria-label="이용 안내" style="font:18px var(--display)">?</button></div>
+    <div class="mark">준하 · 진아</div>
+    <button class="chip" id="summary">한 장으로 보기</button>
+  </div>
+  <button class="chip" id="places"></button>
+  <button id="act" data-off="1"></button>
+
+  <div id="intro">
+    <div class="env" id="env">
+      <div class="env-back"></div>
+      <div class="env-front"></div>
+      <div class="flap"></div>
+      <button class="seal" id="seal" aria-label="봉투 열기">&amp;</button>
+    </div>
+    <p class="env-note" id="env-note">봉인을 눌러 초대장을 열어 주세요</p>
+    <div id="paper">
+      <div class="leaf l"></div><div class="leaf r"></div>
+      <div class="frame"></div>
+      <div class="invite"><em>Wedding Invitation</em><b>이준하 · 김진아</b><span id="card-date"></span><span>라루체 그레이스홀</span></div>
+      <div class="chooser">
+        <h2>어떤 모습으로 오실까요?</h2>
+        <div class="pick" id="pick-list"></div>
+        <button class="btn primary" id="enter">마을로 들어가기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+(function () {
+  const { doll } = W;
+  const app = document.getElementById('app');
+  const scene = document.getElementById('scene');
+  const world = document.getElementById('world');
+  W.mount(app);
+  W.musicButton(document.getElementById('music'));
+  document.getElementById('summary').addEventListener('click', W.openSummary);
+  document.getElementById('card-date').textContent = W.fmtDate();
+  app.addEventListener('contextmenu', (e) => { if (!e.target.closest('input,textarea')) e.preventDefault(); });
+
+  /* ---------- 좌표: u, v는 땅 위의 위치. s=u+v는 화면 세로, d=v-u는 화면 가로 축 ---------- */
+  const CX = .866, CY = .5, ZOOM = .68, DOOR_LINE = 182;
+  const pr = (u, v, z = 0) => [(u - v) * CX, (u + v) * CY - z];
+  const fromSD = (s, d) => [(s - d) / 2, (s + d) / 2];
+
+  function shade(hex, f) {
+    const n = parseInt(hex.slice(1), 16);
+    const c = (x) => Math.round(Math.min(255, x * f)).toString(16).padStart(2, '0');
+    return '#' + c(n >> 16) + c((n >> 8) & 255) + c(n & 255);
+  }
+
+  // 건물은 치수만 주면 면을 투영해서 그린다
+  function makeArt(b) {
+    const out = [], lights = [];
+    const { w, d } = b;
+    const pts = (a) => a.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+    const poly = (a, fill) => out.push(`<polygon points="${pts(a)}" fill="${fill}"/>`);
+    const faces = {
+      U: { p: (t, z, off = 0) => pr(w / 2 + off, d / 2 - t, z), L: d, f: 1 },
+      V: { p: (t, z, off = 0) => pr(-w / 2 + t, d / 2 + off, z), L: w, f: .9 },
+    };
+    const a = {
+      poly,
+      quad(F, t0, t1, z0, z1, fill, off = 0) { const p = faces[F].p; poly([p(t0, z0, off), p(t1, z0, off), p(t1, z1, off), p(t0, z1, off)], fill); },
+      arch(F, t0, t1, z0, z1, fill, off = 0) {
+        const p = faces[F].p, r = (t1 - t0) / 2, c = t0 + r, list = [p(t0, z0, off)];
+        for (let i = 0; i <= 12; i++) { const th = Math.PI - (i / 12) * Math.PI; list.push(p(c + Math.cos(th) * r, z1 + Math.sin(th) * r, off)); }
+        list.push(p(t1, z0, off));
+        poly(list, fill);
+        return list;
+      },
+      circle(F, t, z, r, fill) {
+        const p = faces[F].p, list = [];
+        for (let i = 0; i < 24; i++) { const th = (i / 24) * Math.PI * 2; list.push(p(t + Math.cos(th) * r, z + Math.sin(th) * r, .5)); }
+        poly(list, fill);
+      },
+      face: (F) => faces[F].p,
+      line(F, t0, z0, t1, z1, color, width, cls = '') {
+        const p = faces[F].p, A = p(t0, z0, 1), B = p(t1, z1, 1);
+        out.push(`<line class="${cls}" x1="${A[0].toFixed(1)}" y1="${A[1].toFixed(1)}" x2="${B[0].toFixed(1)}" y2="${B[1].toFixed(1)}" stroke="${color}" stroke-width="${width}" stroke-linecap="round"/>`);
+      },
+      win(F, t, z, ww, hh) {
+        a.arch(F, t - ww / 2 - 2, t + ww / 2 + 2, z - 2, z + hh, '#efe6d6');
+        lights.push(a.arch(F, t - ww / 2, t + ww / 2, z, z + hh, '#8c9ba3'));
+        a.line(F, t, z, t, z + hh + ww / 2, '#efe6d6', 1);
+        a.quad(F, t - ww / 2 - 3, t + ww / 2 + 3, z - 7, z - 2, '#b5c4a7');
+        for (let i = -1; i <= 1; i++) a.circle(F, t + i * ww * .32, z - 1.5, 2.2, i ? '#e6bdb8' : '#f6e6b8');
+      },
+      heart(F, t, z, r, fill) {
+        const p = faces[F].p, list = [];
+        for (let i = 0; i < 32; i++) { const th = (i / 32) * Math.PI * 2, sn = Math.sin(th); list.push(p(t + r * sn * sn * sn, z + r * (.8 * Math.cos(th) - .3 * Math.cos(2 * th) - .12 * Math.cos(3 * th)), .6)); }
+        poly(list, fill);
+      },
+      box(cu, cv, bw, bd, z0, z1, wall) {
+        const P = (x, y, z) => pr(cu + x, cv + y, z), hw = bw / 2, hd = bd / 2;
+        poly([P(-hw, hd, z0), P(hw, hd, z0), P(hw, hd, z1), P(-hw, hd, z1)], shade(wall, .88));
+        poly([P(hw, hd, z0), P(hw, -hd, z0), P(hw, -hd, z1), P(hw, hd, z1)], wall);
+        poly([P(-hw, -hd, z1), P(hw, -hd, z1), P(hw, hd, z1), P(-hw, hd, z1)], shade(wall, 1.05));
+      },
+      gable(cu, cv, bw, bd, z, rh, roof, wall, e = 7) {
+        const P = (x, y, zz) => pr(cu + x, cv + y, zz), hw = bw / 2 + e, hd = bd / 2 + e;
+        poly([P(-hw, -hd, z), P(-hw, hd, z), P(0, hd, z + rh), P(0, -hd, z + rh)], shade(roof, .82));
+        poly([P(-bw / 2, bd / 2, z), P(bw / 2, bd / 2, z), P(0, bd / 2, z + rh * (bw / 2) / hw)], shade(wall, .88));
+        poly([P(hw, hd, z), P(hw, -hd, z), P(0, -hd, z + rh), P(0, hd, z + rh)], roof);
+      },
+      pyramid(cu, cv, bw, bd, z, rh, roof, e = 6) {
+        const P = (x, y, zz) => pr(cu + x, cv + y, zz), hw = bw / 2 + e, hd = bd / 2 + e, A = P(0, 0, z + rh);
+        poly([P(-hw, hd, z), P(hw, hd, z), A], shade(roof, .86));
+        poly([P(hw, hd, z), P(hw, -hd, z), A], roof);
+      },
+    };
+    const L = (w + d) * .4;
+    poly([pr(w / 2, -d / 2), pr(w / 2, d / 2 + L), pr(-w / 2, d / 2 + L), pr(-w / 2, d / 2)], 'rgba(70,58,46,.09)');
+    b.draw(a);
+    b.lightsHtml = `<svg viewBox="-240 -340 480 480" width="480" height="480" aria-hidden="true">${lights.map((l) => `<polygon points="${pts(l)}" fill="#ffdf9e"/>`).join('')}</svg>`;
+    return `<svg class="bld" viewBox="-240 -340 480 480" width="480" height="480" aria-hidden="true"><g stroke="#fbf7ee" stroke-width=".9" stroke-linejoin="round">${out.join('')}</g></svg>`;
+  }
+
+  const door = (a, F, w, L, zh, c) => { a.arch(F, L / 2 - w / 2 - 3, L / 2 + w / 2 + 3, 0, zh + 2, '#efe6d6'); a.arch(F, L / 2 - w / 2, L / 2 + w / 2, 0, zh, c); };
+
+  const STONE = '#f6eee0', ROSE = '#dcb1a8', SAGE = '#b5c4a7', BLUE = '#b2c7d3', MAUVE = '#c0afc6';
+  const PLACES = [
+    {
+      key: 'greet', sign: '우리집', nav: '인사말', s: 1780, dist: 190, door: 'U', w: 110, d: 110, h: 72, top: 60,
+      draw(a) {
+        a.box(0, 0, 110, 110, 0, 72, STONE);
+        a.quad('U', 0, 110, 0, 8, '#ddd0ba'); a.quad('V', 0, 110, 0, 8, '#cfc2ac');
+        a.win('U', 22, 22, 16, 24); a.win('U', 88, 22, 16, 24); a.win('V', 30, 22, 16, 24); a.win('V', 80, 22, 16, 24);
+        door(a, 'U', 24, 110, 40, '#a98a78');
+        a.heart('U', 55, 58, 7, '#dcb1a8');
+        a.box(-20, -30, 16, 16, 72, 134, '#d4c4ad');
+        a.gable(0, 0, 110, 110, 72, 54, ROSE, STONE);
+      },
+    },
+    {
+      key: 'when', sign: '시계탑', nav: '예식 일시', s: 1610, dist: -165, door: 'V', w: 72, d: 72, h: 170, top: 66,
+      draw(a) {
+        a.box(0, 0, 72, 72, 0, 176, '#efe3cc');
+        a.quad('V', 0, 72, 0, 10, '#cfc2ac'); a.quad('U', 0, 72, 0, 10, '#ddd0ba');
+        a.circle('V', 36, 142, 23, '#fbf7ee'); a.circle('V', 36, 142, 2.2, '#403933');
+        a.line('V', 36, 142, 36, 158, '#403933', 2.4, 'hand-m'); a.line('V', 36, 142, 48, 136, '#96695b', 3, 'hand-h');
+        this.clockFace = a.face('V');
+        a.win('U', 36, 92, 14, 26); a.win('V', 36, 86, 12, 20);
+        door(a, 'V', 22, 72, 38, '#8b7362');
+        a.pyramid(0, 0, 72, 72, 176, 66, SAGE);
+      },
+    },
+    {
+      key: 'gallery', sign: '사진관', nav: '갤러리', s: 1310, dist: 190, door: 'U', w: 120, d: 100, h: 86, top: 16,
+      draw(a) {
+        a.box(0, 0, 120, 100, 0, 86, '#dfe2db');
+        a.quad('U', 0, 100, 0, 8, '#c6ccc6'); a.quad('V', 0, 120, 0, 8, '#b8bfb8');
+        a.quad('U', 7, 30, 16, 62, '#8c9ba3'); a.quad('U', 70, 93, 16, 62, '#8c9ba3');
+        for (let i = 0; i < 6; i++) a.quad('U', 4 + i * 16, 20 + i * 16, 62, 73, i % 2 ? '#fbf7ee' : BLUE, 3);
+        for (let i = 0; i < 3; i++) a.win('V', 24 + i * 36, 24, 16, 28);
+        door(a, 'U', 24, 100, 40, '#6c7c85');
+        a.box(0, 0, 124, 104, 86, 93, BLUE);
+        a.box(-12, 0, 50, 42, 93, 110, '#c6d0d4');
+      },
+    },
+    {
+      key: 'contact', sign: '전화 부스', nav: '연락처', s: 1150, dist: -150, door: 'V', w: 54, d: 54, h: 92, top: 18,
+      draw(a) {
+        a.box(0, 0, 54, 54, 0, 96, MAUVE);
+        a.quad('V', 8, 46, 12, 80, '#c9d4d9'); a.quad('U', 8, 46, 12, 80, '#d6dfe3');
+        a.line('V', 27, 12, 27, 80, '#ad9fae', 2); a.line('V', 8, 46, 46, 46, '#ad9fae', 2); a.line('U', 27, 12, 27, 80, '#ad9fae', 2);
+        a.quad('V', 8, 46, 84, 92, '#fbf7ee');
+        a.pyramid(0, 0, 54, 54, 96, 18, shade(MAUVE, .9), 3);
+      },
+    },
+    {
+      key: 'gift', sign: '은행', nav: '마음 전하기', s: 840, dist: 190, door: 'U', w: 120, d: 120, h: 86, top: 44,
+      draw(a) {
+        a.box(0, 0, 120, 120, 0, 86, '#ece4d4');
+        a.quad('U', 0, 120, 0, 9, '#d7ccb9'); a.quad('V', 0, 120, 0, 9, '#c8bda9');
+        a.win('V', 30, 24, 16, 28); a.win('V', 90, 24, 16, 28);
+        door(a, 'U', 26, 120, 44, '#7e6f79');
+        for (const t of [10, 32, 88, 110]) a.quad('U', t - 5, t + 5, 9, 78, '#fbf7ee', 9);
+        a.gable(0, 0, 120, 120, 86, 40, MAUVE, '#ece4d4', 8);
+      },
+    },
+    {
+      key: 'guestbook', sign: '우체국', nav: '방명록', s: 680, dist: -190, door: 'V', w: 120, d: 100, h: 80, top: 48,
+      draw(a) {
+        a.box(0, 0, 120, 100, 0, 80, '#e9dfcc');
+        a.quad('V', 0, 120, 0, 8, '#c8bda9'); a.quad('U', 0, 100, 0, 8, '#d7ccb9');
+        a.win('V', 24, 22, 16, 28); a.win('V', 96, 22, 16, 28); a.win('U', 28, 22, 16, 28); a.win('U', 72, 22, 16, 28);
+        door(a, 'V', 24, 120, 40, '#7c8a72');
+        a.quad('V', 44, 76, 58, 76, '#fbf7ee');
+        a.line('V', 44, 76, 60, 65, '#96695b', 1.3); a.line('V', 76, 76, 60, 65, '#96695b', 1.3);
+        a.gable(0, 0, 120, 100, 80, 42, SAGE, '#e9dfcc');
+      },
+    },
+    {
+      key: 'where', sign: '라루체 그레이스홀', short: '예식장', nav: '오시는 길', s: 300, dist: 60, door: 'U', w: 170, d: 150, h: 112, top: 98,
+      draw(a) {
+        a.box(0, 0, 170, 150, 0, 112, '#f0e4d4');
+        a.quad('U', 0, 150, 0, 11, '#dccdb9'); a.quad('V', 0, 170, 0, 11, '#cdbfaa');
+        for (const t of [28, 122]) a.win('U', t, 26, 18, 44);
+        for (const t of [32, 85, 138]) a.win('V', t, 26, 18, 44);
+        a.arch('U', 75 - 26, 75 + 26, 0, 58, '#efe6d6');
+        a.arch('U', 75 - 22, 75 + 22, 0, 56, '#9c8176');
+        a.line('U', 75, 0, 75, 78, '#efe6d6', 1.4);
+        a.circle('U', 75, 97, 13, '#fbf7ee');
+        a.heart('U', 75, 97, 8.5, '#dcb1a8');
+        a.gable(0, 0, 170, 150, 112, 76, ROSE, '#f0e4d4', 9);
+        a.box(-48, -48, 50, 50, 0, 172, '#ebdfcd');
+        a.pyramid(-48, -48, 50, 50, 172, 64, shade(ROSE, .92), 4);
+      },
+    },
+  ];
+
+  PLACES.forEach((p) => {
+    if (p.key !== 'where') p.dist = Math.sign(p.dist) * (DOOR_LINE + (p.door === 'U' ? p.w : p.d) / 2 + 26);
+    [p.u, p.v] = fromSD(p.s, p.dist);
+    p.fu = p.door === 'U' ? p.u + p.w / 2 + 26 : p.u;
+    p.fv = p.door === 'V' ? p.v + p.d / 2 + 26 : p.v;
+    const [cx, cy] = pr(p.u, p.v);
+    p.cx = cx; p.cy = cy;
+    world.insertAdjacentHTML('beforeend', `<div class="house" style="left:${cx - 240}px;top:${cy - 340}px;z-index:${Math.round(cy)};transform-origin:240px 340px">${makeArt(p)}</div>`);
+    p.el = world.lastElementChild;
+    world.insertAdjacentHTML('beforeend', `<div class="lights" style="left:${cx - 240}px;top:${cy - 340}px">${p.lightsHtml}</div>`);
+    const [dx, dy] = pr(p.fu, p.fv);
+    const m = document.createElement('div');
+    m.className = 'door-mark'; m.style.left = dx + 'px'; m.style.top = dy + 'px';
+    world.appendChild(m); p.mark = m;
+    const sign = document.createElement('div');
+    sign.className = 'plaque'; sign.innerHTML = `<i>✓</i>${p.sign}`;
+    sign.style.left = cx + 'px'; sign.style.top = cy - p.h - p.top - 50 + 'px';
+    world.appendChild(sign); p.plaque = sign;
+  });
+
+  const FOUNTAIN = { s: 590, d: 0, r: 34 };
+  [FOUNTAIN.u, FOUNTAIN.v] = fromSD(FOUNTAIN.s, FOUNTAIN.d);
+
+  /* ---------- 땅 ---------- */
+  const SD = (s, d) => pr(...fromSD(s, d));
+  const pts = (a) => a.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  function groundSvg() {
+    let g = `<polygon points="${pts([SD(350, -198), SD(350, 198), SD(3200, 198), SD(3200, -198)])}" fill="#f8f2e6"/>`;
+    for (const e of [-190, 190]) { const A = SD(350, e), B = SD(3200, e); g += `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="#a78a5c" stroke-width=".8" opacity=".35"/>`; }
+    for (let s = 400; s < 3200; s += 110) { const A = SD(s, -190), B = SD(s, 190); g += `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="#e9dfcd" stroke-width=".8"/>`; }
+    const [fx, fy] = SD(FOUNTAIN.s, 0);
+    g += `<ellipse cx="${fx}" cy="${fy}" rx="205" ry="118" fill="#f3ebdb" stroke="#a78a5c" stroke-width=".8" stroke-opacity=".35"/>`;
+    [[1480, 310], [1480, -310], [1000, 310], [1000, -310], [1960, 300], [1960, -300], [520, -340]].forEach(([s, d]) => {
+      const hw = 52, hd = 36;
+      g += `<polygon points="${pts([SD(s - hw, d - hd), SD(s - hw, d + hd), SD(s + hw, d + hd), SD(s + hw, d - hd)])}" fill="#d8e0c7" stroke="#fbf7ee" stroke-width="1"/>`;
+      for (let i = 0; i < 18; i++) { const [x, y] = SD(s - hw + 10 + (i * 37) % (hw * 2 - 20), d - hd + 8 + (i * 23) % (hd * 2 - 16)); g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="${['#fbf7ee', '#eec6c0', '#f6e6b8'][i % 3]}"/>`; }
+    });
+    return g;
+  }
+  world.insertAdjacentHTML('afterbegin', `<div style="left:-560px;top:120px;z-index:0"><svg viewBox="-560 120 1120 1600" width="1120" height="1600" aria-hidden="true">${groundSvg()}</svg></div>`);
+
+  const cypress = '<svg viewBox="0 0 36 120" width="36" height="120" aria-hidden="true"><ellipse cx="18" cy="116" rx="15" ry="5" fill="rgba(70,58,46,.16)"/><rect x="16" y="104" width="4" height="12" fill="#8a7663"/><path d="M18 2C30 30 32 74 26 108H10C4 74 6 30 18 2z" fill="#a4b596" stroke="#fbf7ee" stroke-width=".9"/></svg>';
+  const olive = '<svg viewBox="0 0 86 100" width="86" height="100" aria-hidden="true"><ellipse cx="43" cy="95" rx="25" ry="7" fill="rgba(70,58,46,.12)"/><rect x="40" y="60" width="6" height="36" rx="3" fill="#a08a75"/><g fill="#bccbaa" stroke="#fbf7ee" stroke-width=".9"><circle cx="26" cy="46" r="20"/><circle cx="60" cy="46" r="20"/><circle cx="43" cy="28" r="24"/></g></svg>';
+  const lamp = '<svg viewBox="0 0 16 74" width="16" height="74" aria-hidden="true"><rect x="7" y="16" width="2" height="56" fill="#776b60"/><path d="M3 15h10l-2-11H5z" fill="#ebdfbe" stroke="#776b60" stroke-width="1"/></svg>';
+  function plant(html, s, d, w, h) {
+    const [x, y] = SD(s, d);
+    world.insertAdjacentHTML('beforeend', `<div class="prop" style="left:${x - w / 2}px;top:${y - h + 3}px;z-index:${Math.round(y)}">${html}</div>`);
+    return { el: world.lastElementChild, x, y, h, cool: 0 };
+  }
+  [[1990, 232], [1990, -232], [1470, 236], [1470, -236], [1000, 236], [1000, -236], [445, -270], [640, 310]].forEach(([s, d]) => plant(cypress, s, d, 36, 120));
+  [[2060, 350], [2060, -340], [1560, 400], [1240, -400], [760, -400], [1090, 400]].forEach(([s, d]) => plant(olive, s, d, 86, 100));
+
+  // 예식 날의 장식: 길을 가로지르는 가랜드, 풍선, 작은 동물
+  const FLAGS = ['#e6bdb8', '#f6e6b8', '#b5c4a7', '#b2c7d3', '#c0afc6'];
+  function garland(s) {
+    const W_ = 197 * 2 * CX, count = 15;
+    let flags = '';
+    const yAt = (t) => 8 + Math.sin(t * Math.PI) * 26;
+    for (let i = 1; i < count; i++) { const t = i / count, x = t * W_, y = yAt(t); flags += `<path d="M${(x - 8).toFixed(1)} ${y.toFixed(1)}h16l-8 16z" fill="${FLAGS[i % 5]}"/>`; }
+    plant(`<svg viewBox="0 -4 ${W_} 60" width="${W_}" height="60" aria-hidden="true"><path d="M0 8Q${W_ / 2} 60 ${W_} 8" fill="none" stroke="#a78a5c" stroke-width="1"/>${flags}</svg>`, s, 0, W_, 136);
+    [-197, 197].forEach((d) => plant(lamp, s, d, 16, 82));
+  }
+  [1480, 1000].forEach(garland);
+  const balloons = plant('<svg class="float" viewBox="0 0 90 130" width="90" height="130" aria-hidden="true"><path d="M26 56Q40 96 45 128M64 50Q50 92 45 128M45 48V128" fill="none" stroke="#a78a5c" stroke-width=".8"/><g stroke="#fbf7ee"><ellipse cx="22" cy="36" rx="19" ry="23" fill="#e6bdb8"/><ellipse cx="68" cy="32" rx="19" ry="23" fill="#b2c7d3"/><ellipse cx="45" cy="26" rx="20" ry="24" fill="#f6e6b8"/></g></svg>', 490, -170, 90, 130);
+  const [fx, fy] = SD(FOUNTAIN.s, 0);
+  world.insertAdjacentHTML('beforeend', `<div class="prop" style="left:${fx - 60}px;top:${fy - 72}px;z-index:${Math.round(fy)}"><svg viewBox="-60 -72 120 112" width="120" height="112" aria-hidden="true">
+    <ellipse cx="0" cy="8" rx="52" ry="30" fill="#ddd0ba"/><ellipse cx="0" cy="0" rx="52" ry="30" fill="#efe6d6" stroke="#fbf7ee"/><ellipse cx="0" cy="0" rx="44" ry="25" fill="#c4d5dc"/>
+    <rect x="-5" y="-42" width="10" height="42" fill="#e6dcc9"/><ellipse cx="0" cy="-42" rx="21" ry="10" fill="#efe6d6" stroke="#fbf7ee"/><ellipse cx="0" cy="-44" rx="15" ry="6.500" fill="#c4d5dc"/><g transform="translate(-24 -8)"><ellipse cx="0" cy="3" rx="8" ry="5" fill="#fbf7ee"/><circle cx="6" cy="-3" r="4" fill="#fbf7ee"/><path d="M9.500 -3l4 1-4 1z" fill="#e8c27e"/></g><g transform="translate(20 8)"><ellipse cx="0" cy="3" rx="7" ry="4.500" fill="#fbf7ee"/><circle cx="-5" cy="-3" r="3.600" fill="#fbf7ee"/><path d="M-8 -3l-4 1 4 1z" fill="#e8c27e"/></g><rect x="-2.500" y="-60" width="5" height="16" fill="#e6dcc9"/><circle cx="0" cy="-63" r="5" fill="#efe6d6" stroke="#fbf7ee"/><g fill="#c4d5dc"><circle class="drop" cx="0" cy="-62" r="2.200" style="--x:-22px"/><circle class="drop" cx="0" cy="-62" r="2.200" style="--x:22px;animation-delay:-.5s"/><circle class="drop" cx="0" cy="-62" r="2.200" style="--x:-12px;animation-delay:-1s"/><circle class="drop" cx="0" cy="-62" r="2.200" style="--x:13px;animation-delay:-.25s"/></g></svg></div>`);
+
+  /* ---------- 사람들 ---------- */
+  const ICONS = {
+    heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-8-5-8-11a4.500 4.500 0 0 1 8-2.800A4.500 4.500 0 0 1 20 9c0 6-8 11-8 11z" fill="#d99c96"/></svg>',
+    note: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18a3 3 0 1 1-2-2.800V5l11-2v12a3 3 0 1 1-2-2.800V7l-7 1.300z" fill="#96695b"/></svg>',
+    letter: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" fill="#fbf7ee" stroke="#a78a5c" stroke-width="1.400"/><path d="M3 7l9 7 9-7" fill="none" stroke="#a78a5c" stroke-width="1.400"/></svg>',
+    flower: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#e6bdb8"><circle cx="12" cy="6" r="4.200"/><circle cx="18" cy="11" r="4.200"/><circle cx="15.500" cy="18" r="4.200"/><circle cx="8.500" cy="18" r="4.200"/><circle cx="6" cy="11" r="4.200"/></g><circle cx="12" cy="12.500" r="3.200" fill="#f0d68f"/></svg>',
+  };
+  const ICON_ORDER = ['heart', 'letter', 'note', 'flower'];
+  const npcs = [];
+  function addNpc(letter, s, d, look, guest) {
+    const [u, v] = fromSD(s, d);
+    const [x, y] = pr(u, v);
+    const n = document.createElement('div');
+    n.className = 'fig guest';
+    n.style.left = x + 'px'; n.style.top = y + 'px'; n.style.zIndex = Math.round(y);
+    n.innerHTML = `<div class="say">${ICONS[guest === false ? 'heart' : guest || ICON_ORDER[npcs.length % 4]]}</div><div class="inner" style="animation-delay:${(-npcs.length * .7).toFixed(1)}s">${doll(look)}</div>`;
+    world.appendChild(n);
+    npcs.push({ el: n, say: n.querySelector('.say'), x, y, u, v, z: Math.round(y), letter });
+  }
+  const SPOTS = [[1560, -125], [1090, 130], [800, -128], [500, 150]];
+  W.letters().slice(0, 4).forEach((l, i) => addNpc(l, SPOTS[i][0], SPOTS[i][1], W.GUESTS[i % 4]));
+
+  const venue = PLACES[6];
+  [[-38, W.GROOM, '신랑 준하'], [38, W.BRIDE, '신부 진아']].forEach(([off, look, name]) => {
+    const u = venue.fu - 6, v = venue.fv + off;
+    addNpc({ name, text: '귀한 걸음 해 주셔서 감사합니다.' }, u + v, v - u, look, false);
+  });
+
+  /* ---------- 이동 ---------- */
+  const R = 12, CORNER = 20, SMIN = 380, SMAX = 2060, DMAX = 228;
+  function free(u, v) {
+    const s = u + v, d = v - u;
+    if (s < SMIN || s > SMAX || Math.abs(d) > DMAX) return false;
+    for (const p of PLACES) if (Math.abs(u - p.u) < p.w / 2 + R && Math.abs(v - p.v) < p.d / 2 + R) return false;
+    return Math.hypot(u - FOUNTAIN.u, v - FOUNTAIN.v) >= FOUNTAIN.r + R;
+  }
+
+  // 부딪히면 멈추지 않고 둥근 모서리를 따라 밀려나게 한다
+  function pushOut() {
+    for (const p of PLACES) {
+      const hw = p.w / 2 - CORNER, hd = p.d / 2 - CORNER;
+      const nu = Math.max(p.u - hw, Math.min(p.u + hw, u)), nv = Math.max(p.v - hd, Math.min(p.v + hd, v));
+      const ax = u - nu, ay = v - nv, dist = Math.hypot(ax, ay), min = CORNER + R;
+      if (dist < min && dist > .001) { u = nu + ax / dist * min; v = nv + ay / dist * min; }
+    }
+    const ax = u - FOUNTAIN.u, ay = v - FOUNTAIN.v, dist = Math.hypot(ax, ay), min = FOUNTAIN.r + R;
+    if (dist < min && dist > .001) { u = FOUNTAIN.u + ax / dist * min; v = FOUNTAIN.v + ay / dist * min; }
+    const s = Math.max(SMIN, Math.min(SMAX, u + v)), d = Math.max(-DMAX, Math.min(DMAX, v - u));
+    u = (s - d) / 2; v = (s + d) / 2;
+  }
+
+  // 목록이나 건물을 눌렀을 때 문 앞까지 가는 길 찾기
+  const CELL = 20;
+  function findPath(fu, fv, tu, tv) {
+    const toKey = (i, j) => i * 2000 + j;
+    const si = Math.round(fu / CELL), sj = Math.round(fv / CELL);
+    const prev = new Map([[toKey(si, sj), null]]);
+    const queue = [[si, sj]];
+    let hit = null;
+    for (let q = 0; q < queue.length && !hit; q++) {
+      const [i, j] = queue[q];
+      if (Math.hypot(i * CELL - tu, j * CELL - tv) < CELL) { hit = [i, j]; break; }
+      for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+        const ni = i + a, nj = j + b, k = toKey(ni, nj);
+        if (prev.has(k) || !free(ni * CELL, nj * CELL)) continue;
+        prev.set(k, [i, j]);
+        queue.push([ni, nj]);
+      }
+    }
+    if (!hit) return [];
+    const raw = [];
+    for (let c = hit; c; c = prev.get(toKey(c[0], c[1]))) raw.unshift([c[0] * CELL, c[1] * CELL]);
+    raw.push([tu, tv]);
+    const clear = (A, B) => { const n = Math.ceil(Math.hypot(B[0] - A[0], B[1] - A[1]) / 8); for (let i = 1; i < n; i++) if (!free(A[0] + (B[0] - A[0]) * i / n, A[1] + (B[1] - A[1]) * i / n)) return false; return true; };
+    const out = [];
+    let at = [fu, fv], i = 0;
+    while (i < raw.length) {
+      let j = raw.length - 1;
+      while (j > i && !clear(at, raw[j])) j--;
+      out.push(raw[j]); at = raw[j]; i = j + 1;
+    }
+    return out;
+  }
+
+  const me = document.createElement('div');
+  me.id = 'me'; me.className = 'fig';
+  me.innerHTML = '<div class="inner" id="me-doll"></div>';
+  world.appendChild(me);
+
+  const actBtn = document.getElementById('act'), placesBtn = document.getElementById('places');
+  let [u, v] = fromSD(1960, 0);
+  let camX = pr(u, v)[0], camY = pr(u, v)[1], vw = app.clientWidth, vh = app.clientHeight;
+  let path = [], goal = null, fast = 1, stuck = 0, footAcc = 0, footSide = 1, footIdx = 0, busy = false, near = null, last = 0, started = false;
+  let myLook = W.GUESTS[0];
+  const visited = new Set();
+  const keys = new Set();
+
+  function renderPlacesBtn() { placesBtn.textContent = `둘러본 곳 ${visited.size} / ${PLACES.length}`; }
+  renderPlacesBtn();
+
+  world.insertAdjacentHTML('beforeend', '<svg id="route" aria-hidden="true"><polyline/></svg>');
+  const routeEl = document.getElementById('route'), routeLine = routeEl.querySelector('polyline');
+  const destEl = document.createElement('div');
+  destEl.id = 'dest';
+  destEl.innerHTML = '<svg viewBox="0 0 44 60" aria-hidden="true"><ellipse cx="22" cy="55" rx="11" ry="4" fill="rgba(70,58,46,.22)"/><path d="M22 44S6 33 6 19A9 9 0 0 1 22 13 9 9 0 0 1 38 19C38 33 22 44 22 44z" fill="#96695b" stroke="#fbf7ee" stroke-width="2"/></svg>';
+  world.appendChild(destEl);
+  routeEl.style.display = destEl.style.display = 'none';
+
+  const FOOTS = Array.from({ length: 26 }, () => { const f = document.createElement('div'); f.className = 'foot'; world.appendChild(f); return f; });
+
+  function showDest(tu, tv) {
+    const [x, y] = pr(tu, tv);
+    destEl.style.left = x + 'px'; destEl.style.top = y + 'px'; destEl.style.display = '';
+    routeEl.style.display = '';
+  }
+  function clearRoute() {
+    path = []; stuck = 0;
+    if (goal) goal.plaque.classList.remove('target');
+    goal = null;
+    routeEl.style.display = destEl.style.display = 'none';
+  }
+  function settle(a, b) { const su = u, sv = v; u = a; v = b; pushOut(); const r = [u, v]; u = su; v = sv; return r; }
+
+  function bump(el) {
+    el.animate([{ transform: 'scale(1,1)' }, { transform: 'scale(1.04,.95)' }, { transform: 'scale(.98,1.03)' }, { transform: 'scale(1,1)' }], { duration: 340, easing: 'ease-out' });
+  }
+
+  function walkTo(p, quick) {
+    if (busy) return; 
+    clearRoute();
+    bump(p.el);
+    W.sfx('tap');
+    if (Math.hypot(u - p.fu, v - p.fv) < 56) { enter(p); return; }
+    path = findPath(u, v, p.fu, p.fv);
+    if (!path.length) path = [[p.fu, p.fv]];
+    fast = quick ? 2 : 1.7;
+    goal = p;
+    p.plaque.classList.add('target');
+    showDest(p.fu, p.fv);
+  }
+
+  function walkGround(tu, tv) {
+    if (busy) return; 
+    const had = goal;
+    if (had) had.plaque.classList.remove('target');
+    goal = null;
+    const [a, b] = settle(tu, tv);
+    path = findPath(u, v, a, b);
+    if (!path.length) path = [[a, b]];
+    fast = 1.15;
+    showDest(a, b);
+  }
+
+  function burst(x, y, n, colors, spread = 70) {
+    for (let i = 0; i < n; i++) {
+      const b = document.createElement('div');
+      b.className = 'bit';
+      b.style.left = x + 'px'; b.style.top = y + 'px';
+      b.style.background = colors[i % colors.length];
+      world.appendChild(b);
+      const th = Math.random() * Math.PI * 2, r = spread * (.4 + Math.random() * .6);
+      b.animate([{ transform: 'translate(0,0) scale(.6)', opacity: 1 }, { transform: `translate(${Math.cos(th) * r}px,${Math.sin(th) * r * .6 - 34}px) rotate(200deg) scale(1)`, opacity: 1, offset: .55 }, { transform: `translate(${Math.cos(th) * r * 1.15}px,${Math.sin(th) * r * .6 + 26}px) rotate(330deg) scale(.8)`, opacity: 0 }], { duration: 950, easing: 'ease-out' }).onfinish = () => b.remove();
+    }
+  }
+  const PASTEL = ['#e6bdb8', '#f6e6b8', '#b5c4a7', '#b2c7d3', '#c0afc6'];
+  const WATER = ['#c4d5dc', '#dce8ed', '#fbf7ee'];
+
+  function ripple(x, y) {
+    const r = document.createElement('div');
+    r.className = 'rip'; r.style.left = x + 'px'; r.style.top = y + 'px';
+    world.appendChild(r);
+    r.animate([{ transform: 'scale(.3)', opacity: .9 }, { transform: 'scale(1)', opacity: 0 }], { duration: 480, easing: 'ease-out' }).onfinish = () => r.remove();
+  }
+  function releaseBalloon() {
+    const color = PASTEL[Math.floor(Math.random() * 5)];
+    world.insertAdjacentHTML('beforeend', `<div style="left:${balloons.x - 18}px;top:${balloons.y - 130}px;z-index:3040"><svg viewBox="0 0 36 70" width="36" height="70" aria-hidden="true"><path d="M18 44Q12 58 18 70" fill="none" stroke="#a78a5c" stroke-width=".8"/><ellipse cx="18" cy="23" rx="17" ry="21" fill="${color}" stroke="#fbf7ee"/></svg></div>`);
+    const b = world.lastElementChild;
+    b.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(46px,-420px)' }, { transform: 'translate(-20px,-1000px)' }], { duration: 3600, easing: 'ease-in' }).onfinish = () => b.remove();
+    W.sfx('balloon');
+  }
+
+  function enter(p) {
+    if (busy) return;
+    busy = true; keys.clear();
+    clearRoute();
+    bump(p.el);
+    W.sfx('door');
+    me.classList.add('gone');
+    actBtn.dataset.off = '1';
+    setTimeout(() => W.openSection(p.key, () => {
+      busy = false;
+      me.classList.remove('gone');
+      if (!visited.has(p.key)) {
+        visited.add(p.key);
+        p.plaque.classList.add('done');
+        renderPlacesBtn();
+        placesBtn.animate([{ scale: 1 }, { scale: 1.14 }, { scale: 1 }], { duration: 360 });
+        burst(p.cx, p.cy - p.h - p.top - 34, 14, PASTEL);
+        W.sfx('stamp');
+        if (visited.size === PLACES.length) setTimeout(finale, 700);
+        else W.toast(`둘러본 곳 ${visited.size} / ${PLACES.length}`);
+      }
+    }), 240);
+  }
+
+  function finale() {
+    W.sfx('finale');
+    for (let i = 0; i < 34; i++) {
+      const b = document.createElement('div');
+      b.className = 'petal';
+      b.style.cssText = `left:${Math.random() * 100}%;background:${PASTEL[i % 5]};animation:fall ${2.4 + Math.random() * 1.8}s linear ${Math.random() * .9}s 1 both`;
+      app.appendChild(b);
+      setTimeout(() => b.remove(), 5400);
+    }
+    setTimeout(() => W.openSheet({
+      title: '끝까지 둘러봐 주셔서 고마워요',
+      html: `<p class="greet">우리 마을 곳곳을 다녀가 주신 마음,<br>오래 기억할게요.<br>${W.fmtDate()},<br>${W.INFO.venue} ${W.INFO.hall}에서 만나요.</p><div class="parents"><b>${W.INFO.groom.name} · ${W.INFO.bride.name}</b></div>`,
+    }), 900);
+  }
+  actBtn.addEventListener('click', () => { if (near) enter(near); });
+
+  placesBtn.addEventListener('click', () => {
+    let close = null;
+    close = W.openSheet({
+      title: '마을 안내',
+      html: PLACES.map((p, i) => `<button class="place-row${visited.has(p.key) ? ' done' : ''}" data-i="${i}"><b>${p.nav}</b><span>${p.sign}${visited.has(p.key) ? ' ✓' : ''}</span></button>`).join(''),
+      bind: (el) => el.querySelectorAll('.place-row').forEach((b) => b.addEventListener('click', () => { close(); setTimeout(() => walkTo(PLACES[+b.dataset.i], true), 200); })),
+    });
+  });
+
+  let touch = null, lastDrag = 0;
+  function toWorld(cx, cy) {
+    const r = scene.getBoundingClientRect();
+    return [(cx - r.left - vw / 2) / ZOOM + camX, (cy - r.top - vh * ANCHOR) / ZOOM + camY];
+  }
+  // 화면 좌표(건물 그림 포함)를 땅 위 좌표로 되돌린다
+  const unproject = (wx, wy) => { const a = wx / CX, b = wy / CY; return [(a + b) / 2, (b - a) / 2]; };
+
+  scene.addEventListener('pointerdown', (e) => {
+    if (busy || touch) return;
+    touch = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: false };
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!touch || e.pointerId !== touch.id) return;
+    if (Math.hypot(e.clientX - touch.x, e.clientY - touch.y) > 12) touch.moved = true;
+    const now = performance.now();
+    if (touch.moved && now - lastDrag > 130) {
+      lastDrag = now;
+      const [wx, wy] = toWorld(e.clientX, e.clientY);
+      walkGround(...unproject(wx, wy));
+    }
+  });
+  function release(e) {
+    if (!touch || e.pointerId !== touch.id) return;
+    const t = touch;
+    touch = null;
+    if (t.moved || busy) return;
+    tapAt(...toWorld(e.clientX, e.clientY));
+  }
+  function tapAt(wx, wy) {
+    if (Math.abs(wx - balloons.x) < 48 && wy > balloons.y - 134 && wy < balloons.y - 30) { releaseBalloon(); return; }
+    const person = npcs.find((n) => Math.abs(wx - n.x) < 34 && wy > n.y - 120 && wy < n.y + 14);
+    if (person) { pinned = person; pinnedUntil = performance.now() + 1700; W.sfx('tap'); return; }
+    if (Math.hypot((wx - fx) / 1.7, wy - fy + 12) < 52) { burst(fx, fy - 26, 16, WATER, 80); W.sfx('splash'); return; }
+    const hit = PLACES.slice().sort((a, b) => b.cy - a.cy).find((p) => {
+      const dx = Math.abs(wx - p.cx), half = (p.w + p.d) / 2;
+      const onSign = dx < 90 && Math.abs(wy - (p.cy - p.h - p.top - 34)) < 26;
+      const onBody = dx < half * CX + 6 && wy > p.cy - p.h - p.top && wy < p.cy + half * CY - dx * .577 + 6;
+      return onSign || onBody;
+    });
+    if (hit) { walkTo(hit); return; }
+    ripple(wx, wy);
+    W.sfx('tap');
+    walkGround(...unproject(wx, wy));
+  }
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', (e) => { if (touch && e.pointerId === touch.id) touch = null; });
+
+  const KEYMAP = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
+  window.addEventListener('keydown', (e) => {
+    if (e.target.matches && e.target.matches('input,textarea') || !started) return;
+    if (KEYMAP[e.key]) { keys.add(e.key); e.preventDefault(); clearRoute();  }
+    if (e.key === 'Enter' && near && !busy && document.activeElement === document.body) enter(near);
+  });
+  window.addEventListener('keyup', (e) => keys.delete(e.key));
+
+  const SPEED = 290, ANCHOR = .73, GOING_DOWN = .3, TOP_EDGE = -130, BOTTOM_EDGE = 1560;
+  let aimTarget = ANCHOR, aim = ANCHOR;
+  let pinned = null, pinnedUntil = 0, talking = null;
+  const ticker = document.getElementById('ticker');
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000 || 0);
+    last = now;
+    vw = app.clientWidth; vh = app.clientHeight;
+    let sx = 0, sy = 0;
+    keys.forEach((k) => { sx += KEYMAP[k][0]; sy += KEYMAP[k][1]; });
+    const mag = Math.hypot(sx, sy);
+    if (mag > 1) { sx /= mag; sy /= mag; }
+    let du = 0, dv = 0, moving = false, faceX = 0, faceY = 0;
+    if (!busy && (sx || sy)) {
+      const px = sx * SPEED, py = sy * SPEED;
+      du = (px / CX + py / CY) / 2 * dt;
+      dv = (py / CY - px / CX) / 2 * dt;
+      faceX = sx; faceY = sy; moving = true;
+    } else if (!busy && path.length) {
+      const [tu, tv] = path[0], ax = tu - u, ay = tv - v, dist = Math.hypot(ax, ay);
+      const perUnit = dist > .01 ? Math.hypot((ax - ay) * CX, (ax + ay) * CY) / dist : 1, step = SPEED * fast * dt / perUnit;
+      if (dist <= step) { u = tu; v = tv; path.shift(); }
+      else { du = ax / dist * step; dv = ay / dist * step; }
+      faceX = (ax - ay); faceY = (ax + ay); moving = true;
+      if (path.length === 0) {
+        const p = goal;
+        if (p) p.plaque.classList.remove('target');
+        goal = null;
+        routeEl.style.display = destEl.style.display = 'none';
+        if (p) enter(p);
+      }
+    }
+    if (du || dv) {
+      const bu = u, bv = v;
+      u += du; v += dv; pushOut();
+      const went = Math.hypot(u - bu, v - bv);
+      if (path.length) {
+        stuck = went < Math.hypot(du, dv) * .25 ? stuck + 1 : 0;
+        if (stuck > 14) clearRoute();
+      }
+      footAcc += went;
+      if (footAcc > 26) {
+        footAcc = 0; footSide = -footSide;
+        const f = FOOTS[footIdx++ % FOOTS.length], [fxx, fyy] = pr(u + footSide * 4, v - footSide * 4);
+        f.style.left = fxx + 'px'; f.style.top = fyy + 'px';
+        f.animate([{ opacity: .55 }, { opacity: 0 }], { duration: 1300 });
+      }
+    }
+    me.classList.toggle('walk', moving);
+    if (faceX) me.classList.toggle('left', faceX < 0);
+    if (Math.abs(faceY) > .05) me.classList.toggle('back', faceY < 0);
+
+    const [x, y] = pr(u, v);
+    me.style.left = x + 'px'; me.style.top = y + 'px'; me.style.zIndex = Math.round(y);
+    if (path.length) routeLine.setAttribute('points', [[x, y], ...path.map(([a, b]) => pr(a, b))].map((c) => c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' '));
+    camX += (x - camX) * .16;
+    if ((du || dv) && Math.abs(du + dv) * CY > Math.abs(du - dv) * CX * .35) aimTarget = du + dv < 0 ? ANCHOR : GOING_DOWN;
+    aim += (aimTarget - aim) * Math.min(1, dt * 6);
+    const scale = vh / ZOOM;
+    const wantCam = Math.max(TOP_EDGE + scale * ANCHOR, Math.min(BOTTOM_EDGE - scale * (1 - ANCHOR), y - (aim - ANCHOR) * scale));
+    camY += (wantCam - camY) * .22;
+    world.style.transform = `translate3d(${Math.round(vw / 2 - camX * ZOOM)}px,${Math.round(vh * ANCHOR - camY * ZOOM)}px,0) scale(${ZOOM})`;
+
+    // 하객을 누르면 메시지가 화면 위쪽에 잠깐 나타난다
+    const nearest = pinned && now < pinnedUntil ? pinned : null;
+    if (nearest !== talking) {
+      if (talking) talking.el.classList.remove('open');
+      talking = nearest;
+      if (talking) {
+        talking.el.classList.add('open');
+        ticker.innerHTML = `${W.esc(talking.letter.text)}<small>${W.esc(talking.letter.name)}</small>`;
+      }
+      ticker.classList.toggle('on', !!talking);
+    }
+
+    let found = null;
+    if (!busy && !path.length) found = PLACES.find((p) => Math.hypot(u - p.fu, v - p.fv) < 56) || null;
+    if (found !== near) {
+      if (near) near.mark.classList.remove('near');
+      near = found;
+      if (near) {
+        near.mark.classList.add('near');
+        actBtn.innerHTML = `<small>${near.short || near.sign}</small>들어가기`;
+        if (navigator.vibrate) navigator.vibrate(8); 
+      }
+      actBtn.dataset.off = near ? '0' : '1';
+    }
+    drawFx(dt, now);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* ---------- 시작 화면 ---------- */
+  document.getElementById('me-doll').innerHTML = doll(myLook);
+  const pickList = document.getElementById('pick-list');
+  W.GUESTS.forEach((g, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = doll(g);
+    b.setAttribute('aria-label', `모습 ${i + 1}`);
+    b.setAttribute('aria-pressed', String(i === 0));
+    b.addEventListener('click', () => {
+      pickList.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      myLook = g;
+      document.getElementById('me-doll').innerHTML = doll(g);
+    });
+    pickList.appendChild(b);
+  });
+  app.addEventListener('letter', (e) => {
+    const p = PLACES[5];
+    addNpc(e.detail, p.fu + p.fv + 70 + npcs.length * 8, -60 + npcs.length * 12, myLook, true);
+  });
+
+  for (let i = 0; i < 7; i++) {
+    const b = document.createElement('div');
+    b.className = 'petal';
+    b.style.cssText = `left:${6 + i * 14}%;background:${PASTEL[i % 5]};animation-duration:${11 + i * 1.3}s;animation-delay:${-i * 2.1}s`;
+    app.appendChild(b);
+  }
+
+  /* ---------- 서울의 시간과 날씨 ---------- */
+  const SEOUL = { lat: 37.5636, lon: 126.9869 };
+  function seoulNow() {
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', hour12: false, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(new Date());
+    const get = (t) => +parts.find((x) => x.type === t).value;
+    return { y: get('year'), mo: get('month'), d: get('day'), h: get('hour') % 24, m: get('minute') };
+  }
+  // 날짜로 서울의 해 뜨고 지는 시각(분)을 계산한다
+  function sunTimes(t) {
+    const n = Math.round((Date.UTC(t.y, t.mo - 1, t.d) - Date.UTC(t.y, 0, 0)) / 864e5);
+    const g = 2 * Math.PI / 365 * (n - 1);
+    const eq = 229.18 * (.000075 + .001868 * Math.cos(g) - .032077 * Math.sin(g) - .014615 * Math.cos(2 * g) - .040849 * Math.sin(2 * g));
+    const dec = .006918 - .399912 * Math.cos(g) + .070257 * Math.sin(g) - .006758 * Math.cos(2 * g) + .000907 * Math.sin(2 * g);
+    const lat = SEOUL.lat * Math.PI / 180;
+    const ha = Math.acos(Math.cos(90.833 * Math.PI / 180) / (Math.cos(lat) * Math.cos(dec)) - Math.tan(lat) * Math.tan(dec)) * 180 / Math.PI;
+    const noon = 720 - 4 * SEOUL.lon - eq + 540;
+    return { rise: noon - 4 * ha, set: noon + 4 * ha };
+  }
+  function phaseNow(t) {
+    const m = t.h * 60 + t.m, { rise, set } = sunTimes(t);
+    if (m >= rise - 40 && m < rise + 35) return 'dawn';
+    if (m >= set - 50 && m < set + 30) return 'dusk';
+    return m >= rise && m < set ? 'day' : 'night';
+  }
+
+  world.insertAdjacentHTML('beforeend', '<div id="snowcover"></div><div id="tint"></div>');
+  const tint = document.getElementById('tint'), snowcover = document.getElementById('snowcover');
+  [1480, 1000].forEach((s) => [-197, 197].forEach((d) => {
+    const [x, y] = SD(s, d);
+    world.insertAdjacentHTML('beforeend', `<div class="glow" style="left:${x}px;top:${y - 72}px"></div>`);
+  }));
+  for (let i = 0; i < 9; i++) {
+    const f = document.createElement('div');
+    f.className = 'ff';
+    f.style.cssText = `left:${8 + i * 10}%;top:${22 + (i * 37) % 55}%;animation-delay:${-i * 1.1}s,${-i * .7}s`;
+    app.appendChild(f);
+  }
+
+  const TINTS = { day: null, dawn: 'rgba(246,176,170,.26)', dusk: 'rgba(240,138,92,.32)', night: 'rgba(20,26,66,.62)' };
+  const WEATHER_TINT = { clear: null, cloud: 'rgba(120,128,138,.12)', rain: 'rgba(96,110,130,.26)', snow: 'rgba(200,214,232,.2)', fog: 'rgba(214,214,206,.34)' };
+  let liveWeather = 'clear';
+  function classify(code) {
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snow';
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82) || code >= 95) return 'rain';
+    if (code === 45 || code === 48) return 'fog';
+    return code === 3 ? 'cloud' : 'clear';
+  }
+  function loadWeather() {
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${SEOUL.lat}&longitude=${SEOUL.lon}&current=weather_code&timezone=Asia%2FSeoul`)
+      .then((r) => r.json())
+      .then((j) => { liveWeather = classify(j.current.weather_code); applyEnv(); })
+      .catch(() => { /* 날씨를 못 받으면 맑은 하늘로 둔다 */ });
+  }
+  let fxKind = 'clear';
+  function setClock(t) {
+    const P = PLACES[1], face = P.clockFace, tower = P.el;
+    const put = (cls, deg, len) => {
+      const line = tower.querySelector('.' + cls), th = deg * Math.PI / 180;
+      const A = face(36 + Math.sin(th) * len, 142 + Math.cos(th) * len, 1);
+      line.setAttribute('x2', A[0].toFixed(1));
+      line.setAttribute('y2', A[1].toFixed(1));
+    };
+    put('hand-m', t.m * 6, 18);
+    put('hand-h', (t.h % 12 + t.m / 60) * 30, 12);
+  }
+  function applyEnv() {
+    const t = seoulNow();
+    setClock(t);
+    const phase = phaseNow(t), weather = liveWeather;
+    const layers = [TINTS[phase], WEATHER_TINT[weather]].filter(Boolean);
+    tint.style.background = layers.map((c) => `linear-gradient(${c},${c})`).join(',') || 'none';
+    tint.style.zIndex = phase === 'night' ? 1 : 2500;
+    world.classList.toggle('nightfall', phase === 'night');
+    world.classList.toggle('lit', phase === 'night' || phase === 'dusk');
+    app.classList.toggle('night', phase === 'night');
+    app.classList.toggle('wet', weather === 'rain' || weather === 'snow');
+    snowcover.style.display = weather === 'snow' ? 'block' : 'none';
+    fxKind = weather;
+    resetFx();
+  }
+
+  // 비와 눈은 캔버스 한 장에 그린다
+  const fxCanvas = document.getElementById('fx'), fxc = fxCanvas.getContext('2d');
+  let drops = [];
+  function resetFx() {
+    fxCanvas.width = vw; fxCanvas.height = vh;
+    fxc.clearRect(0, 0, vw, vh);
+    const count = fxKind === 'rain' ? 110 : fxKind === 'snow' ? 80 : 0;
+    drops = Array.from({ length: count }, () => ({ x: Math.random() * vw, y: Math.random() * vh, v: .7 + Math.random() * .6, r: 1.4 + Math.random() * 2.2, p: Math.random() * 6.28 }));
+  }
+  function drawFx(dt, now) {
+    if (!drops.length) return;
+    fxc.clearRect(0, 0, vw, vh);
+    if (fxKind === 'rain') {
+      fxc.strokeStyle = 'rgba(205,218,235,.62)';
+      fxc.lineWidth = 1.2;
+      fxc.beginPath();
+      for (const d of drops) {
+        d.y += 760 * d.v * dt; d.x -= 110 * d.v * dt;
+        if (d.y > vh) { d.y = -20; d.x = Math.random() * (vw + 80); }
+        fxc.moveTo(d.x, d.y); fxc.lineTo(d.x + 3.5, d.y - 20 * d.v);
+      }
+      fxc.stroke();
+    } else {
+      fxc.fillStyle = 'rgba(255,255,255,.92)';
+      fxc.beginPath();
+      for (const d of drops) {
+        d.y += 62 * d.v * dt;
+        d.x += Math.sin(now / 900 + d.p) * 18 * dt;
+        if (d.y > vh + 6) { d.y = -6; d.x = Math.random() * vw; }
+        fxc.moveTo(d.x + d.r, d.y); fxc.arc(d.x, d.y, d.r, 0, 6.29);
+      }
+      fxc.fill();
+    }
+  }
+  applyEnv();
+  loadWeather();
+  setInterval(applyEnv, 20000);
+  setInterval(loadWeather, 15 * 60 * 1000);
+
+  /* ---------- 이용 안내 ---------- */
+  const GUIDE_ICONS = {
+    pin: '<path d="M17 30S6 21 6 13a11 11 0 0 1 22 0c0 8-11 17-11 17z" fill="#96695b"/><circle cx="17" cy="13" r="4" fill="#fbf7ee"/>',
+    house: '<path d="M17 4L4 16h4v14h18V16h4z" fill="#dcb1a8"/><rect x="14" y="20" width="6" height="10" fill="#fbf7ee"/>',
+    heart: '<path d="M17 29S4 21 4 12a7 7 0 0 1 13-3 7 7 0 0 1 13 3c0 9-13 17-13 17z" fill="#d99c96"/>',
+    page: '<rect x="7" y="4" width="20" height="26" fill="#fbf7ee" stroke="#a78a5c" stroke-width="1.500"/><path d="M11 11h12M11 17h12M11 23h8" stroke="#a78a5c" stroke-width="1.500"/>',
+    sun: '<circle cx="17" cy="17" r="7" fill="#e8c27e"/><path d="M17 3v5M17 26v5M3 17h5M26 17h5M7 7l3.500 3.500M23.500 23.500L27 27M27 7l-3.500 3.500M10.500 23.500L7 27" stroke="#e8c27e" stroke-width="2" stroke-linecap="round"/>',
+  };
+  const guideRow = (icon, text) => `<div class="guide-row"><svg viewBox="0 0 34 34" aria-hidden="true">${GUIDE_ICONS[icon]}</svg><p>${text}</p></div>`;
+  function openGuide() {
+    let close = null;
+    close = W.openSheet({
+      title: '마을 이용 안내',
+      html: `${guideRow('pin', '가고 싶은 곳을 톡 누르면 걸어가요.')}${guideRow('house', '건물을 누르면 바로 들어가서 예식 안내를 볼 수 있어요.')}${guideRow('heart', '하객과 분수, 풍선도 눌러 보세요.')}${guideRow('page', '내용만 빠르게 보려면 위쪽의 <b>한 장으로 보기</b>를 눌러 주세요.')}${guideRow('sun', '마을은 지금 서울의 시간과 날씨를 따라 달라져요.')}
+        <div class="btn-row"><button class="btn primary" id="guide-ok">마을 둘러보기</button></div>`,
+      bind: (el) => {
+        el.querySelector('#guide-ok').addEventListener('click', () => close());
+      },
+    });
+  }
+  document.getElementById('guide').addEventListener('click', openGuide);
+  function firstGuide() {
+    let seen = false;
+    try { seen = !!localStorage.getItem('wedding-guide-seen'); localStorage.setItem('wedding-guide-seen', '1'); } catch (e) { seen = false; }
+    if (!seen) setTimeout(openGuide, 700);
+  }
+
+  // 봉투에서 나온 편지가 그대로 커져 선택 화면이 되고, 양쪽으로 열리며 마을이 된다
+  const env = document.getElementById('env'), seal = document.getElementById('seal'), intro = document.getElementById('intro'), paper = document.getElementById('paper');
+  me.classList.add('gone');
+  function placePaper() {
+    const a = app.getBoundingClientRect(), e = env.getBoundingClientRect();
+    paper.style.left = e.left - a.left + 12 + 'px';
+    paper.style.top = e.top - a.top + 124 + 'px';
+    paper.style.width = e.width - 24 + 'px';
+    paper.style.height = '188px';
+    paper.style.clipPath = 'inset(0 0 104px 0)';
+  }
+  placePaper();
+  let opened = false;
+  seal.addEventListener('click', () => {
+    if (opened) return;
+    opened = true;
+    if (navigator.vibrate) navigator.vibrate(18);
+    W.sfx('door');
+    env.classList.add('open');
+    document.getElementById('env-note').style.opacity = 0;
+    setTimeout(() => {
+      paper.style.top = parseFloat(paper.style.top) - 218 + 'px';
+      paper.style.clipPath = 'inset(0 0 0 0)';
+    }, 520);
+    setTimeout(() => {
+      paper.classList.add('grow');
+      env.classList.add('away');
+      paper.style.left = paper.style.top = '0px';
+      paper.style.width = paper.style.height = '100%';
+    }, 1750);
+    setTimeout(() => { paper.classList.add('ready'); intro.classList.add('clear'); }, 2550);
+  });
+
+  document.getElementById('enter').addEventListener('click', () => {
+    const a = app.getBoundingClientRect();
+    const chosen = pickList.querySelector('[aria-pressed="true"]');
+    const r = chosen.querySelector('svg').getBoundingClientRect();
+    const fly = document.createElement('div');
+    fly.id = 'landing';
+    fly.innerHTML = doll(myLook);
+    fly.style.cssText = `left:${r.left - a.left}px;top:${r.top - a.top}px;width:${r.width}px;height:${r.height}px`;
+    app.appendChild(fly);
+    chosen.style.visibility = 'hidden';
+    paper.classList.add('gate');
+    W.sfx('door');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const w = 44 * ZOOM, h = 88 * ZOOM;
+      fly.style.left = vw / 2 - w / 2 + 'px';
+      fly.style.top = vh * ANCHOR - 85 * ZOOM + 'px';
+      fly.style.width = w + 'px';
+      fly.style.height = h + 'px';
+    }));
+    setTimeout(() => {
+      started = true;
+      fly.remove();
+      intro.hidden = true;
+      me.classList.remove('gone');
+      const [x, y] = pr(u, v);
+      burst(x, y - 40, 22, PASTEL, 110);
+      W.sfx('stamp');
+      firstGuide();
+    }, 1120);
+  });
+})();
+</script>
+</body>
+</html>
