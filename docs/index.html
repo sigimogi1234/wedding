@@ -60,7 +60,10 @@
   .zoom { position: absolute; z-index: 20; left: 10px; bottom: calc(132px + env(safe-area-inset-bottom, 0px)); display: grid; }
   .zoom .pbtn { font-size: 20px; }
   #recenter { position: absolute; z-index: 20; left: 10px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
-  #places { position: absolute; z-index: 20; left: 50%; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); white-space: nowrap; }
+  #places { white-space: nowrap; padding: 0 10px; font-size: 12px; }
+  .plaque.left { bottom: auto; top: 0; transform: translate(-100%, -50%); }
+  .plaque.right { bottom: auto; top: 0; transform: translate(0, -50%); }
+  .plaque.mini { padding: 2px 6px 1px; box-shadow: 0 -2px 0 0 var(--ink), 0 2px 0 0 var(--ink), -2px 0 0 0 var(--ink), 2px 0 0 0 var(--ink); font: 700 10px/1.2 var(--display); }
   #act { position: absolute; z-index: 21; right: 10px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); min-height: 52px; padding: 0 14px; background: var(--accent); color: #fff; box-shadow: var(--border), inset 0 -3px 0 #d8707f; font-size: 14px; transition: opacity .15s, transform .15s; }
   #act small { display: block; font-size: 11px; font-weight: 400; opacity: .9; }
   #act > span { display: block; text-align: left; line-height: 1.35; }
@@ -131,11 +134,11 @@
   <div class="top">
     <div class="row"><button class="pbtn icon" id="music"></button><button class="pbtn icon" id="guide" aria-label="이용 안내">?</button></div>
     <div class="mark">준하 ♥ 진아</div>
+    <button class="pbtn" id="places"></button>
   </div>
   <div class="dialog" id="dialog" role="status"><p id="dialog-text"></p><small id="dialog-name"></small></div>
   <button class="pbtn icon" id="recenter" aria-label="내 캐릭터 보기"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 0h1v2H4zM4 7h1v2H4zM0 4h2v1H0zM7 4h2v1H7zM3 3h3v3H3z" fill="currentColor"/></svg></button>
   <div class="zoom"><button class="pbtn icon" id="zoom-in" aria-label="확대">+</button><button class="pbtn icon" id="zoom-out" aria-label="축소">−</button></div>
-  <button class="pbtn" id="places"></button>
   <button class="pbtn" id="act" data-off="1"></button>
   <button id="infobar" aria-label="예식 안내 한 장으로 보기"><span class="dday" id="info-dday"></span><span class="info"><b id="info-date"></b><span>명동 라루체 그레이스홀</span></span><span class="more">▶ 안내</span></button>
 
@@ -977,13 +980,17 @@
     holder.innerHTML = `<div class="plaque">${signIcon(p.icon)}<span><b><i>★</i>${p.nav}</b><small>${p.sign}</small></span></div>`;
     labels.appendChild(holder);
     p.holder = holder; p.plaque = holder.firstChild;
-    p.labelY = p.Y - (p.h + p.top) * K - 6;
+    // 이름표는 건물 바깥쪽 옆, 벽 가운데 높이에 둔다
+    p.side = p.X < 0 ? -1 : 1;
+    p.labelX = p.X + p.side * ((p.w + p.d) / 2 * K + 4);
+    p.labelY = p.Y - p.h * K * .55;
+    p.plaque.classList.add(p.side < 0 ? 'left' : 'right');
   });
 
-  const gateLabel = { X: 0, labelY: SD(GATE_S, 0)[1] - 52 };
+  const gateLabel = { X: 0, labelX: 0, labelY: SD(GATE_S, 0)[1] - 50 };
   gateLabel.holder = document.createElement('div');
   gateLabel.holder.className = 'pl';
-  gateLabel.holder.innerHTML = '<div class="plaque">♥ 어서 오세요 ♥</div>';
+  gateLabel.holder.innerHTML = '<div class="plaque mini">어서 오세요</div>';
   labels.appendChild(gateLabel.holder);
 
   /* ---------- 대화창 ---------- */
@@ -1050,7 +1057,7 @@
         visited.add(p.key);
         p.plaque.classList.add('done');
         renderPlacesBtn();
-        burst(p.X, p.labelY, 18, PASTEL);
+        burst(p.labelX, p.labelY, 18, PASTEL);
         W.sfx('stamp');
         if (visited.size === PLACES.length) setTimeout(finale, 700);
         else W.toast(`★ 스탬프 ${visited.size}/${PLACES.length}`);
@@ -1249,9 +1256,9 @@
     vel = [0, 0];
     if (fishing) { pull(); return; }
     if (busy) return;
-    tapAt(...artPoint(e.clientX, e.clientY));
+    tapAt(...artPoint(e.clientX, e.clientY), e.clientX, e.clientY);
   }
-  function tapAt(ax, ay) {
+  function tapAt(ax, ay, cx, cy) {
     if (opaqueAt(balloons.art, balloons.X, balloons.Y, ax, ay)) { releaseBalloon(); return; }
     const critter = animals.find((a) => Math.abs(ax - a.x) < (a.kind === 'deer' ? 12 : 8) && ay > a.y - FOOT[a.kind] - 6 && ay < a.y + 3);
     if (critter) {
@@ -1263,7 +1270,7 @@
     const person = npcs.find((n) => Math.abs(ax - n.X) < 9 && ay > n.Y - 38 && ay < n.Y + 3);
     if (person) { person.hop = performance.now() + 420; say(person.letter); return; }
     if (opaqueAt(fountain.art, fountain.X, fountain.Y, ax, ay)) { burst(fountain.X, fountain.Y - 18, 16, WATER, 22); W.sfx('splash'); return; }
-    const sign = PLACES.find((p) => { const w = p.plaque.offsetWidth / P / 2 + 3, h = p.plaque.offsetHeight / P + 4; return Math.abs(ax - p.X) < w && ay > p.labelY - h && ay < p.labelY + 2; });
+    const sign = PLACES.find((p) => { const r = p.plaque.getBoundingClientRect(); return cx >= r.left - 4 && cx <= r.right + 4 && cy >= r.top - 4 && cy <= r.bottom + 4; });
     if (sign) { walkTo(sign); return; }
     const hit = PLACES.slice().sort((a, b) => b.Y - a.Y).find((p) => opaqueAt(p.day, p.X, p.Y, ax, ay));
     if (hit) { walkTo(hit); return; }
@@ -1529,7 +1536,14 @@
     });
     ctx.globalAlpha = 1;
 
-    [gateLabel, ...PLACES].forEach((p) => { p.holder.style.transform = `translate(${((p.X - camX) * P).toFixed(1)}px,${((p.labelY - camY) * P).toFixed(1)}px)`; });
+    // 이름표가 화면 밖으로 나가면 가장자리에 붙여 둔다
+    const vw = app.clientWidth, widths = PLACES.map((p) => p.plaque.offsetWidth);
+    gateLabel.holder.style.transform = `translate(${((gateLabel.labelX - camX) * P).toFixed(1)}px,${((gateLabel.labelY - camY) * P).toFixed(1)}px)`;
+    PLACES.forEach((p, i) => {
+      let x = (p.labelX - camX) * P;
+      if (p.side < 0) x = Math.max(x, widths[i] + 6); else x = Math.min(x, vw - widths[i] - 6);
+      p.holder.style.transform = `translate(${x.toFixed(1)}px,${((p.labelY - camY) * P).toFixed(1)}px)`;
+    });
   }
 
   /* ---------- 이용 안내 ---------- */
