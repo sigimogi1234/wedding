@@ -13,13 +13,13 @@
   --mint-ui: #c8efd9;
   --brass: #e7a83f;
   --display: "Galmuri11", "Apple SD Gothic Neo", monospace;
-  --body: "Galmuri11", "Apple SD Gothic Neo", monospace;
-  --hand: "Galmuri11", "Apple SD Gothic Neo", monospace;
+  --body: "Gowun Dodum", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --hand: "Gowun Dodum", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --px: 3px;
   --border: 0 calc(var(--px) * -1) 0 0 var(--ink), 0 var(--px) 0 0 var(--ink), calc(var(--px) * -1) 0 0 0 var(--ink), var(--px) 0 0 0 var(--ink);
 }
 
-body { background: #d8f0e0; font: 14px/1.7 var(--body); -webkit-font-smoothing: none; }
+body { background: #d8f0e0; font: 15px/1.7 var(--body); }
 .app { background: #a8dc8c; }
 
 .pbtn {
@@ -32,7 +32,7 @@ body { background: #d8f0e0; font: 14px/1.7 var(--body); -webkit-font-smoothing: 
   padding: 0 12px;
   background: var(--paper-hi);
   box-shadow: var(--border), inset 0 -3px 0 #e3d6c8;
-  font: 700 13px/1 var(--display);
+  font: 700 14px/1 var(--display);
   color: var(--ink);
 }
 .pbtn:active { transform: translateY(2px); box-shadow: var(--border); }
@@ -59,19 +59,19 @@ body { background: #d8f0e0; font: 14px/1.7 var(--body); -webkit-font-smoothing: 
   padding: 30px 48px 12px;
   border: 0;
   background: var(--sky-ui);
-  font: 700 17px/1.4 var(--display);
+  font: 700 18px/1.4 var(--display);
   text-align: center;
 }
 .sheet h3 { font: 700 15px/1.5 var(--display); }
 .grab { height: 26px; padding-top: 10px; }
 .grab span { width: 36px; height: 4px; border-radius: 0; background: var(--ink); opacity: .45; }
 .close { top: 6px; right: 6px; width: 40px; height: 40px; font: 700 20px/1 var(--display); }
-.sheet-body { font-size: 14px; }
-.greet { font: 14px/2 var(--display); }
+.sheet-body { font-size: 15.5px; }
+.greet { font: 16px/2 var(--body); }
 .parents b { font: 700 17px/1.5 var(--display); }
-.parents small { font-size: 12px; }
-.note { font-size: 12px; }
-.temp { border-radius: 0; background: #ffe7a3; font-size: 11px; }
+.parents small { font-size: 14px; }
+.note { font-size: 13.5px; }
+.temp { border-radius: 0; background: #ffe7a3; font-size: 12.5px; }
 
 .btn {
   min-height: 42px;
@@ -80,25 +80,26 @@ body { background: #d8f0e0; font: 14px/1.7 var(--body); -webkit-font-smoothing: 
   margin: 3px;
   background: var(--paper-hi);
   box-shadow: var(--border), inset 0 -3px 0 #e3d6c8;
-  font: 700 13px/1.3 var(--display);
+  font: 700 14px/1.3 var(--display);
 }
 .btn.primary { background: var(--accent); color: #fff; box-shadow: var(--border), inset 0 -3px 0 #d8707f; }
 .btn.primary::before { content: "▶ "; }
 .btn:active { transform: translateY(2px); }
 
 .person { border-bottom: 2px dotted var(--line); }
-.person b { font: 700 15px/1.5 var(--display); }
+.person b { font: 700 16px/1.5 var(--display); }
+.person span { font-size: 15.5px; }
 .way { border-bottom: 2px dotted var(--line); }
 .way summary { font: 700 15px/1.4 var(--display); }
 .way summary::after { content: "▼"; font-size: 12px; }
 .way[open] summary::after { content: "▲"; }
-.way p { font-size: 13px; }
-.cal { font-size: 13px; }
+.way p { font-size: 15px; }
+.cal { font: 15px/1.6 var(--body); }
 .cal td.on { color: #fff; }
 .cal td.on::before { border-radius: 0; background: var(--accent); }
-.field input, .field textarea { border: 0; border-radius: 0; background: #fff8ec; box-shadow: var(--border); font: 14px/1.5 var(--body); margin: 3px 3px 6px; width: calc(100% - 6px); }
-.letter { border-left: 0; background: #fff8ec; box-shadow: var(--border); margin: 3px; font: 14px/1.6 var(--hand); }
+.field input, .field textarea { border: 0; border-radius: 0; background: #fff8ec; box-shadow: var(--border); font: 16px/1.5 var(--body); margin: 3px 3px 6px; width: calc(100% - 6px); }
+.letter { border-left: 0; background: #fff8ec; box-shadow: var(--border); margin: 3px; font: 15.5px/1.6 var(--hand); }
 .pola { box-shadow: var(--border); }
-.pola p { font: 14px/1.3 var(--hand); }
+.pola p { font: 15px/1.3 var(--hand); }
 
 .toast { bottom: 140px; border-radius: 0; background: var(--ink); font: 13px/1.4 var(--display); box-shadow: 0 0 0 3px #fff; }
