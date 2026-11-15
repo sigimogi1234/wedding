@@ -2,18 +2,37 @@
   // 수집 봇이 소스에서 번호를 바로 읽지 못하게 가려 둔다
   function unmask(v) { return atob(v).split('').reverse().join(''); }
 
+  // 언어: 주소의 ?lang=en, 저장해 둔 선택, 기기 언어 순서로 정한다
+  const LANG = (() => {
+    let l = null;
+    try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('wedding-lang'); } catch (e) { l = null; }
+    if (!l) l = (navigator.language || 'ko').toLowerCase().startsWith('ko') ? 'ko' : 'en';
+    return l === 'en' ? 'en' : 'ko';
+  })();
+  const EN = LANG === 'en';
+  const t = (ko, en) => (EN ? en : ko);
+  document.documentElement.lang = LANG;
+  function setLang(l) {
+    try { localStorage.setItem('wedding-lang', l); } catch (e) { /* 저장이 막혀도 주소로 넘긴다 */ }
+    const u = new URL(location.href);
+    u.searchParams.set('lang', l);
+    location.replace(u.toString());
+  }
+
   const INFO = {
-    groom: { name: '이준하', short: '준하', father: '이성훈', mother: '임완수', phone: unmask('NDcwNS03NTU0LTAxMA==') },
-    bride: { name: '김진아', short: '진아', father: '김정규', mother: '박선주', phone: unmask('NzE2My02NDQyLTAxMA==') },
+    groom: { name: t('이준하', 'Junha Lee'), short: t('준하', 'Junha'), father: t('이성훈', 'Sunghoon Lee'), mother: t('임완수', 'Wansu Lim'), phone: unmask('NDcwNS03NTU0LTAxMA==') },
+    bride: { name: t('김진아', 'Jina Kim'), short: t('진아', 'Jina'), father: t('김정규', 'Jeonggyu Kim'), mother: t('박선주', 'Sunju Park'), phone: unmask('NzE2My02NDQyLTAxMA==') },
     date: new Date(2027, 2, 20, 15, 30),
-    venue: '라루체',
-    hall: '그레이스홀',
-    address: '서울특별시 중구 퇴계로18길 46',
+    venue: t('라루체', 'La Luce'),
+    hall: t('그레이스홀', 'Grace Hall'),
+    addressKo: '서울특별시 중구 퇴계로18길 46',
+    address: t('서울특별시 중구 퇴계로18길 46', '46, Toegye-ro 18-gil, Jung-gu, Seoul'),
     tel: '02-766-8200',
     mapQuery: '서울 중구 퇴계로18길 46',
   };
 
-  const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  const DAYS = EN ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : ['일', '월', '화', '수', '목', '금', '토'];
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const svg = (box, body, cls = 'art') => `<svg class="${cls}" viewBox="${box}" aria-hidden="true">${body}</svg>`;
 
   // 웨딩 케이크 토퍼처럼 얼굴 없이 옷과 실루엣으로만 표현한 인물
@@ -71,11 +90,11 @@
   };
 
   const SCENES = [
-    { bg: '#c8d5db', ground: '#ccd5c0', cap: '함께 걷는 길', extra: '' },
-    { bg: '#ebdfbe', ground: '#e8d0c1', cap: '봄날의 소풍', extra: '' },
-    { bg: '#d4cbd7', ground: '#c8d5db', cap: '우산 하나, 두 사람', extra: '' },
-    { bg: '#6f7b89', ground: '#8f9aa6', cap: '별 보는 밤', extra: '' },
-    { bg: '#e3cac7', ground: '#f3ecdf', cap: '우리의 약속', extra: '' },
+    { bg: '#c8d5db', ground: '#ccd5c0', cap: t('함께 걷는 길', 'Walking together'), extra: '' },
+    { bg: '#ebdfbe', ground: '#e8d0c1', cap: t('봄날의 소풍', 'Spring picnic'), extra: '' },
+    { bg: '#d4cbd7', ground: '#c8d5db', cap: t('우산 하나, 두 사람', 'One umbrella, two of us'), extra: '' },
+    { bg: '#6f7b89', ground: '#8f9aa6', cap: t('별 보는 밤', 'Stargazing'), extra: '' },
+    { bg: '#e3cac7', ground: '#f3ecdf', cap: t('우리의 약속', 'Our promise'), extra: '' },
   ];
   function scene(s, i) {
     const stars = i === 3 ? [[30, 30], [80, 50], [150, 24], [200, 58], [120, 74]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="#fff6d8"/>`).join('') : '';
@@ -98,7 +117,7 @@
   }
 
   function copy(text, done) {
-    const fallback = () => toast(`${text} 를 길게 눌러 복사해 주세요`);
+    const fallback = () => toast(t(`${text} 를 길게 눌러 복사해 주세요`, `Press and hold to copy: ${text}`));
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => toast(done), fallback);
     } else fallback();
@@ -107,7 +126,7 @@
   function openSheet({ title, html, bind, onClose }) {
     const veil = document.createElement('div');
     veil.className = 'veil';
-    veil.innerHTML = `<section class="sheet" role="dialog" aria-modal="true" aria-label="${title}"><div class="grab" aria-hidden="true"><span></span></div><button class="close" aria-label="닫기">×</button><h2>${title}</h2><div class="sheet-body">${html}</div></section>`;
+    veil.innerHTML = `<section class="sheet" role="dialog" aria-modal="true" aria-label="${title}"><div class="grab" aria-hidden="true"><span></span></div><button class="close" aria-label="${t('닫기', 'Close')}">×</button><h2>${title}</h2><div class="sheet-body">${html}</div></section>`;
     root.appendChild(veil);
     requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('show')));
     const sheet = veil.querySelector('.sheet');
@@ -158,16 +177,16 @@
   }
 
   function bindCommon(el) {
-    el.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b.dataset.copy, b.dataset.done || '복사했어요')));
+    el.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b.dataset.copy, b.dataset.done || t('복사했어요', 'Copied'))));
   }
 
   /* ---------- 방명록 ---------- */
   const KEY = 'wedding-letters';
   const SAMPLES = [
-    { name: '예시 하객 1', text: '두 사람 정말 축하해요! 오래오래 행복하세요.', sample: true },
-    { name: '예시 하객 2', text: '결혼식 날 꼭 갈게요. 그날 만나요.', sample: true },
-    { name: '예시 하객 3', text: '마을이 너무 귀여워요. 우체국 단골 할게요.', sample: true },
-    { name: '예시 하객 4', text: '늘 지금처럼 웃는 부부가 되길 바라요.', sample: true },
+    { name: t('예시 하객 1', 'Sample guest 1'), text: t('두 사람 정말 축하해요! 오래오래 행복하세요.', 'Congratulations to you both! Wishing you a long, happy life together.'), sample: true },
+    { name: t('예시 하객 2', 'Sample guest 2'), text: t('결혼식 날 꼭 갈게요. 그날 만나요.', "I'll be there on the day. See you soon!"), sample: true },
+    { name: t('예시 하객 3', 'Sample guest 3'), text: t('마을이 너무 귀여워요. 우체국 단골 할게요.', "This village is so cute. I'll be a post office regular."), sample: true },
+    { name: t('예시 하객 4', 'Sample guest 4'), text: t('늘 지금처럼 웃는 부부가 되길 바라요.', 'May you always smile the way you do now.'), sample: true },
   ];
   let mine = [];
   try { mine = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { mine = []; }
@@ -184,6 +203,7 @@
     const d = INFO.date;
     const h = d.getHours();
     const m = d.getMinutes();
+    if (EN) return `${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} · ${h > 12 ? h - 12 : h}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
     return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${DAYS[d.getDay()]}요일 ${h < 12 ? '오전' : '오후'} ${h > 12 ? h - 12 : h}시${m ? ` ${m}분` : ''}`;
   }
   function dday() {
@@ -191,7 +211,7 @@
     const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const b = new Date(INFO.date.getFullYear(), INFO.date.getMonth(), INFO.date.getDate());
     const n = Math.round((b - a) / 864e5);
-    return n > 0 ? `D-${n}` : n === 0 ? '오늘이에요' : '감사합니다';
+    return n > 0 ? `D-${n}` : n === 0 ? t('오늘이에요', 'Today!') : t('감사합니다', 'Thank you');
   }
   function calendar() {
     const d = INFO.date;
@@ -206,61 +226,73 @@
   }
 
   const q = encodeURIComponent(INFO.mapQuery);
-  const mapLinks = `<div class="btn-row">
+  const mapLinks = EN
+    ? `<div class="btn-row">
+    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('46 Toegye-ro 18-gil, Jung-gu, Seoul')}" target="_blank" rel="noopener">Google Maps</a>
+    <a class="btn" href="https://map.naver.com/p/search/${q}" target="_blank" rel="noopener">Naver Map</a>
+    <a class="btn" href="https://map.kakao.com/?q=${q}" target="_blank" rel="noopener">Kakao Map</a>
+  </div>`
+    : `<div class="btn-row">
     <a class="btn" href="https://map.naver.com/p/search/${q}" target="_blank" rel="noopener">네이버지도</a>
     <a class="btn" href="https://map.kakao.com/?q=${q}" target="_blank" rel="noopener">카카오맵</a>
     <a class="btn" href="tmap://search?name=${q}">티맵</a>
   </div>`;
-  const person = (label, p) => `<div class="person"><div><b>${label} ${p.name}</b><span>${p.phone}</span></div><a class="btn" href="tel:${p.phone}">전화</a><a class="btn" href="sms:${p.phone}">문자</a></div>`;
-  const account = (label, who) => `<div class="person"><div><b>${label}</b><span class="note">${who} · 계좌번호를 곧 넣을 자리</span></div></div>`;
+  const person = (label, p) => `<div class="person"><div><b>${label} ${p.name}</b><span>${p.phone}</span></div><a class="btn" href="tel:${p.phone}">${t('전화', 'Call')}</a><a class="btn" href="sms:${p.phone}">${t('문자', 'Text')}</a></div>`;
+  const account = (label, who) => `<div class="person"><div><b>${label}</b><span class="note">${who} · ${t('계좌번호를 곧 넣을 자리', 'Account details coming soon')}</span></div></div>`;
 
-  const GREETING = '서로 다른 길을 걷던 두 사람이<br>이제 같은 길을 함께 걸으려 합니다.<br>귀한 걸음으로 축복해 주시면<br>더없는 기쁨으로 간직하겠습니다.';
-  const FAMILY = `<div class="parents">
+  const GREETING = t('서로 다른 길을 걷던 두 사람이<br>이제 같은 길을 함께 걸으려 합니다.<br>귀한 걸음으로 축복해 주시면<br>더없는 기쁨으로 간직하겠습니다.',
+    'Two people who walked different paths<br>are now setting out on the same one, together.<br>It would mean the world to us<br>to have you celebrate this day with us.');
+  const FAMILY = EN
+    ? `<div class="parents">
+    <div><small>Son of ${INFO.groom.father} & ${INFO.groom.mother}</small><br><b>Groom ${INFO.groom.name}</b></div>
+    <div><small>Daughter of ${INFO.bride.father} & ${INFO.bride.mother}</small><br><b>Bride ${INFO.bride.name}</b></div>
+  </div>`
+    : `<div class="parents">
     <div><small>${INFO.groom.father} · ${INFO.groom.mother} 의 아들</small><br><b>신랑 ${INFO.groom.name}</b></div>
     <div><small>${INFO.bride.father} · ${INFO.bride.mother} 의 딸</small><br><b>신부 ${INFO.bride.name}</b></div>
   </div>`;
 
   const sections = {
-    greet: { title: '초대합니다', html: () => `<p class="greet">${GREETING}</p>${FAMILY}` },
-    when: { title: '언제 만나요', html: () => `<h3>${fmtDate()}</h3><p class="note">결혼식까지 ${dday()}</p>${calendar()}` },
-    where: { title: '어디서 만나요', html: whereHTML },
+    greet: { title: t('초대합니다', "You're invited"), html: () => `<p class="greet">${GREETING}</p>${FAMILY}` },
+    when: { title: t('언제 만나요', 'When'), html: () => `<h3>${fmtDate()}</h3><p class="note">${t('결혼식까지', 'Until the wedding:')} ${dday()}</p>${calendar()}` },
+    where: { title: t('어디서 만나요', 'Where'), html: whereHTML },
     gallery: {
-      title: '사진관',
-      html: () => `<div class="pola-stack" data-nodrag>${SCENES.map((s, i) => `<div class="pola" data-i="${i}">${scene(s, i)}<p>${s.cap}</p></div>`).join('')}</div><p class="note" style="text-align:center">옆으로 밀면 다음 사진이 나와요</p>`,
+      title: t('사진관', 'Photo Studio'),
+      html: () => `<div class="pola-stack" data-nodrag>${SCENES.map((s, i) => `<div class="pola" data-i="${i}">${scene(s, i)}<p>${s.cap}</p></div>`).join('')}</div><p class="note" style="text-align:center">${t('옆으로 밀면 다음 사진이 나와요', 'Swipe for the next photo')}</p>`,
       bind: bindGallery,
     },
-    contact: { title: '전화하기', html: () => `${person('신랑', INFO.groom)}${person('신부', INFO.bride)}` },
-    gift: { title: '마음 전하실 곳', html: () => `${account('신랑측', `${INFO.groom.name} · ${INFO.groom.father} · ${INFO.groom.mother}`)}${account('신부측', `${INFO.bride.name} · ${INFO.bride.father} · ${INFO.bride.mother}`)}` },
-    guestbook: { title: '방명록', html: guestbookHTML, bind: bindGuestbook },
+    contact: { title: t('전화하기', 'Call us'), html: () => `${person(t('신랑', 'Groom'), INFO.groom)}${person(t('신부', 'Bride'), INFO.bride)}` },
+    gift: { title: t('마음 전하실 곳', 'Gift accounts'), html: () => `${account(t('신랑측', "Groom's side"), `${INFO.groom.name} · ${INFO.groom.father} · ${INFO.groom.mother}`)}${account(t('신부측', "Bride's side"), `${INFO.bride.name} · ${INFO.bride.father} · ${INFO.bride.mother}`)}` },
+    guestbook: { title: t('방명록', 'Guestbook'), html: guestbookHTML, bind: bindGuestbook },
   };
 
   // 예식장 약도와 주차 안내도를 종이 지도 하나로 다시 그렸다.
   const road = (d, w = 11) => `<path d="${d}" fill="none" stroke="#fffaf0" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
   const label = (x, y, t, size = 11) => `<text x="${x}" y="${y}" text-anchor="middle" font-size="${size}" fill="#85705f">${t}</text>`;
   const lot = (x, y, n) => `<circle cx="${x}" cy="${y}" r="12" fill="#c6deea" stroke="#fffaf0" stroke-width="3"/><text x="${x}" y="${y + 5}" text-anchor="middle" font-size="14" fill="#5c4a3e">${n}</text>`;
-  const PAPER_MAP = `<svg class="paper-map" viewBox="0 0 340 262" role="img" aria-label="명동역 3번 출구에서 라루체까지 가는 약도. 전용 주차장은 라루체에 있고 1번, 2번 주차장은 라루체 근처, 3번 주차장은 서쪽에 있습니다." font-family="Gowun Batang, serif">
+  const PAPER_MAP = `<svg class="paper-map" viewBox="0 0 340 262" role="img" aria-label="${t('명동역 3번 출구에서 라루체까지 가는 약도. 전용 주차장은 라루체에 있고 1번, 2번 주차장은 라루체 근처, 3번 주차장은 서쪽에 있습니다.', 'Map from Myeongdong Station Exit 3 to La Luce. La Luce has its own parking; lots 1 and 2 are nearby and lot 3 is to the west.')}" font-family="Gowun Batang, serif">
     <rect width="340" height="262" rx="10" fill="#ece3d2"/>
     ${road('M0 44L90 34H340', 18)}${road('M250 40L206 160L176 262')}${road('M104 36L128 180L176 262', 8)}${road('M0 200L128 180', 9)}${road('M128 180L206 160', 7)}
     <path d="M0 44L90 34H340" fill="none" stroke="#b3c6d0" stroke-width="5"/>
     <rect x="176" y="14" width="120" height="24" rx="12" fill="#b3c6d0" stroke="#fbf7ee" stroke-width="3"/>
-    <text x="236" y="31" text-anchor="middle" font-size="14" fill="#403933">4호선 명동역</text>
-    ${label(30, 26, '퇴계로')}${label(262, 110, '퍼시픽호텔')}${label(166, 112, '정화예술대')}${label(58, 150, '쌍용플래티넘')}
+    <text x="236" y="31" text-anchor="middle" font-size="14" fill="#403933">${t('4호선 명동역', 'Myeongdong (L4)')}</text>
+    ${label(30, 26, t('퇴계로', 'Toegye-ro'))}${label(262, 110, t('퍼시픽호텔', 'Pacific Hotel'))}${label(166, 112, t('정화예술대', 'Chungwoon'))}${label(58, 150, t('쌍용플래티넘', 'Ssangyong Apt'))}
     <path d="M254 56L208 162L190 176" fill="none" stroke="#96695b" stroke-width="3.5" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="254" cy="52" r="14" fill="#96695b" stroke="#fbf7ee" stroke-width="3"/><text x="254" y="57" text-anchor="middle" font-size="14" fill="#fbf7ee">3</text>
-    <text x="286" y="57" text-anchor="middle" font-size="12" fill="#403933">3번 출구</text>
+    <text x="286" y="57" text-anchor="middle" font-size="12" fill="#403933">${t('3번 출구', 'Exit 3')}</text>
     ${lot(40, 86, 3)}${lot(136, 196, 1)}${lot(126, 240, 2)}
-    <g transform="translate(150 164)"><rect width="56" height="38" rx="7" fill="#d8bcb6" stroke="#fbf7ee" stroke-width="3"/><text x="28" y="17" text-anchor="middle" font-size="13" fill="#403933">라루체</text><text x="28" y="32" text-anchor="middle" font-size="10" fill="#403933">전용 주차</text></g>
+    <g transform="translate(150 164)"><rect width="56" height="38" rx="7" fill="#d8bcb6" stroke="#fbf7ee" stroke-width="3"/><text x="28" y="17" text-anchor="middle" font-size="13" fill="#403933">${t('라루체', 'La Luce')}</text><text x="28" y="32" text-anchor="middle" font-size="10" fill="#403933">${t('전용 주차', 'Parking')}</text></g>
   </svg>`;
 
   function whereHTML() {
     const row = (title, body) => `<details class="way"><summary>${title}</summary><div>${body}</div></details>`;
     return `<h3>${INFO.venue} ${INFO.hall}</h3>
-      <div class="person"><div><span>${INFO.address}</span><br><span class="note">예식장 ${INFO.tel}</span></div><button class="btn butter" data-copy="${INFO.address}" data-done="주소를 복사했어요">복사</button></div>
+      <div class="person"><div><span>${INFO.address}</span><br>${EN ? `<span class="note">${INFO.addressKo}</span><br>` : ''}<span class="note">${t('예식장', 'Venue')} ${INFO.tel}</span></div><button class="btn butter" data-copy="${INFO.addressKo}" data-done="${t('주소를 복사했어요', 'Address copied')}">${t('복사', 'Copy')}</button></div>
       ${PAPER_MAP}${mapLinks}
-      ${row('지하철', '<p>4호선 명동역 3번 출구에서 퍼시픽호텔 오른쪽 길로 60m</p>')}
-      ${row('버스', '<p><b>퇴계로2가·명동역 정류장</b><br>104, 105, 421, 463, 507, 604, N16, 7011</p><p><b>명동입구 정류장</b><br>104, 421, 463, 507, 604, N16, 7011</p>')}
-      ${row('자가용', '<p><b>강남에서</b><br>반포대교, 남산3호터널을 지나 쌍용플래티넘 아파트 옆에서 우회전한 뒤, 아파트를 끼고 좌회전</p><p><b>서울역에서</b><br>퇴계로 방면으로 회현역, 회현사거리를 지나 직진. 스테이트타워와 뉴오리엔탈호텔 사이로 우회전 후 왼쪽 첫 번째 골목</p><p><b>왕십리에서</b><br>퇴계로를 따라 남대문 방향으로 직진, 퇴계로2가 지하차도를 지나 회현사거리 신세계백화점 앞에서 유턴. 스테이트타워와 뉴오리엔탈호텔 사이로 우회전 후 왼쪽 첫 번째 골목</p>')}
-      ${row('주차', '<p>라루체 전용 주차장과 지도의 1, 2, 3번 주차장을 이용하실 수 있어요.<span class="temp">요금 확인 중</span></p>')}`;
+      ${EN ? row('Subway', '<p>Myeongdong Station (Line 4), Exit 3. Walk about 60 m along the road to the right of Pacific Hotel.</p>') : row('지하철', '<p>4호선 명동역 3번 출구에서 퍼시픽호텔 오른쪽 길로 60m</p>')}
+      ${EN ? row('Bus', '<p><b>Toegyero 2-ga · Myeongdong Station stop</b><br>104, 105, 421, 463, 507, 604, N16, 7011</p><p><b>Myeongdong Entrance stop</b><br>104, 421, 463, 507, 604, N16, 7011</p>') : row('버스', '<p><b>퇴계로2가·명동역 정류장</b><br>104, 105, 421, 463, 507, 604, N16, 7011</p><p><b>명동입구 정류장</b><br>104, 421, 463, 507, 604, N16, 7011</p>')}
+      ${EN ? row('By car', '<p><b>From Gangnam</b><br>Cross Banpo Bridge and go through Namsan Tunnel 3. Turn right beside Ssangyong Platinum Apartments, then turn left around the apartments.</p><p><b>From Seoul Station</b><br>Head toward Toegye-ro and go straight past Hoehyeon Station and Hoehyeon Intersection. Turn right between State Tower and New Oriental Hotel, then take the first alley on the left.</p><p><b>From Wangsimni</b><br>Go straight along Toegye-ro toward Namdaemun through the Toegyero 2-ga underpass. Make a U-turn in front of Shinsegae Department Store at Hoehyeon Intersection, turn right between State Tower and New Oriental Hotel, then take the first alley on the left.</p>') : ''}${EN ? '' : row('자가용', '<p><b>강남에서</b><br>반포대교, 남산3호터널을 지나 쌍용플래티넘 아파트 옆에서 우회전한 뒤, 아파트를 끼고 좌회전</p><p><b>서울역에서</b><br>퇴계로 방면으로 회현역, 회현사거리를 지나 직진. 스테이트타워와 뉴오리엔탈호텔 사이로 우회전 후 왼쪽 첫 번째 골목</p><p><b>왕십리에서</b><br>퇴계로를 따라 남대문 방향으로 직진, 퇴계로2가 지하차도를 지나 회현사거리 신세계백화점 앞에서 유턴. 스테이트타워와 뉴오리엔탈호텔 사이로 우회전 후 왼쪽 첫 번째 골목</p>')}
+      ${EN ? row('Parking', '<p>You can park in La Luce\'s own lot or in lots 1, 2 and 3 on the map.<span class="temp">Fees to be confirmed</span></p>') : row('주차', '<p>라루체 전용 주차장과 지도의 1, 2, 3번 주차장을 이용하실 수 있어요.<span class="temp">요금 확인 중</span></p>')}`;
   }
 
   function letterList() {
@@ -268,10 +300,10 @@
   }
   function guestbookHTML() {
     return `<form class="form" id="gb-form">
-      <label class="field">작성자<input id="gb-name" maxlength="12" required placeholder="이름을 적어 주세요"></label>
-      <label class="field">편지<textarea id="gb-text" rows="3" maxlength="120" required placeholder="두 사람에게 한마디"></textarea></label>
-      <button class="btn primary" type="submit">편지 보내기</button>
-    </form><p class="note" style="margin-top:10px">지금은 준비 중이라 글이 이 휴대폰에만 저장돼요.</p><h3 style="margin-top:18px">마을에 도착한 편지</h3><div class="letters" id="gb-list">${letterList()}</div>`;
+      <label class="field">${t('작성자', 'Your name')}<input id="gb-name" maxlength="20" required placeholder="${t('이름을 적어 주세요', 'Write your name')}"></label>
+      <label class="field">${t('편지', 'Message')}<textarea id="gb-text" rows="3" maxlength="160" required placeholder="${t('두 사람에게 한마디', 'A few words for the couple')}"></textarea></label>
+      <button class="btn primary" type="submit">${t('편지 보내기', 'Send letter')}</button>
+    </form><p class="note" style="margin-top:10px">${t('지금은 준비 중이라 글이 이 휴대폰에만 저장돼요.', 'This is still being set up, so messages are saved only on this phone.')}</p><h3 style="margin-top:18px">${t('마을에 도착한 편지', 'Letters that arrived')}</h3><div class="letters" id="gb-list">${letterList()}</div>`;
   }
   function bindGuestbook(el) {
     el.querySelector('#gb-form').addEventListener('submit', (e) => {
@@ -287,7 +319,7 @@
       p.innerHTML = art.plane;
       root.appendChild(p);
       setTimeout(() => p.remove(), 1600);
-      toast('편지가 날아갔어요');
+      toast(t('편지가 날아갔어요', 'Your letter is on its way'));
       root.dispatchEvent(new CustomEvent('letter', { detail: item }));
     });
   }
@@ -330,7 +362,7 @@
   function openSummary() {
     const order = ['greet', 'when', 'where', 'contact', 'gift'];
     openSheet({
-      title: `${INFO.groom.short} ♥ ${INFO.bride.short} 결혼합니다`,
+      title: t(`${INFO.groom.short} ♥ ${INFO.bride.short} 결혼합니다`, `${INFO.groom.short} ♥ ${INFO.bride.short} are getting married`),
       html: `<div class="stack-v">${order.map((k) => `<section>${k === 'greet' ? '' : `<h3>${sections[k].title}</h3>`}${sections[k].html()}</section>`).join('')}</div>`,
     });
   }
@@ -410,9 +442,9 @@
   }
 
   function musicButton(btn) {
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 10v4h3l4 4V6L7 10z" fill="currentColor"/><path class="wave" d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg><span>음악</span>';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 10v4h3l4 4V6L7 10z" fill="currentColor"/><path class="wave" d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg><span>' + t('음악', 'Music') + '</span>';
     btn.setAttribute('aria-pressed', 'true');
-    btn.setAttribute('aria-label', '배경음악');
+    btn.setAttribute('aria-label', t('배경음악', 'Background music'));
     btn.addEventListener('click', () => {
       wanted = !wanted;
       btn.setAttribute('aria-pressed', String(wanted));
@@ -421,5 +453,5 @@
     });
   }
 
-  window.W = { sfx, INFO, art, doll, GROOM, BRIDE, GUESTS, sections, mount, toast, openSheet, openSection, openSummary, letters, addLetter, esc, bindCommon, bindGallery, musicButton, fmtDate, dday, calendar, GREETING, FAMILY, mapLinks, person, account, SCENES, scene };
+  window.W = { t, EN, LANG, setLang, sfx, INFO, art, doll, GROOM, BRIDE, GUESTS, sections, mount, toast, openSheet, openSection, openSummary, letters, addLetter, esc, bindCommon, bindGallery, musicButton, fmtDate, dday, calendar, GREETING, FAMILY, mapLinks, person, account, SCENES, scene };
 })();
