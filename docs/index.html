@@ -980,11 +980,13 @@
     holder.innerHTML = `<div class="plaque">${signIcon(p.icon)}<span><b><i>★</i>${p.nav}</b><small>${p.sign}</small></span></div>`;
     labels.appendChild(holder);
     p.holder = holder; p.plaque = holder.firstChild;
-    // 이름표는 건물 바깥쪽 옆, 벽 가운데 높이에 둔다
-    p.side = p.X < 0 ? -1 : 1;
-    p.labelX = p.X + p.side * ((p.w + p.d) / 2 * K + 4);
-    p.labelY = p.Y - p.h * K * .55;
-    p.plaque.classList.add(p.side < 0 ? 'left' : 'right');
+    // 이름표는 건물의 길 쪽 옆, 지붕이 시작하는 높이에 둔다
+    p.side = p.X < 0 ? 1 : -1;
+    p.labelX = p.X + p.side * ((p.w + p.d) / 2 * K + 3);
+    p.labelY = p.Y - p.h * K - 2;
+    // 가운데에 있는 예식장은 지붕 위 가운데에 둔다
+    if (p.key === 'where') { p.side = 0; p.labelX = p.X; p.labelY = p.Y - (p.h + p.top) * K - 4; }
+    else p.plaque.classList.add(p.side < 0 ? 'left' : 'right');
   });
 
   const gateLabel = { X: 0, labelX: 0, labelY: SD(GATE_S, 0)[1] - 50 };
@@ -1536,14 +1538,7 @@
     });
     ctx.globalAlpha = 1;
 
-    // 이름표가 화면 밖으로 나가면 가장자리에 붙여 둔다
-    const vw = app.clientWidth, widths = PLACES.map((p) => p.plaque.offsetWidth);
-    gateLabel.holder.style.transform = `translate(${((gateLabel.labelX - camX) * P).toFixed(1)}px,${((gateLabel.labelY - camY) * P).toFixed(1)}px)`;
-    PLACES.forEach((p, i) => {
-      let x = (p.labelX - camX) * P;
-      if (p.side < 0) x = Math.max(x, widths[i] + 6); else x = Math.min(x, vw - widths[i] - 6);
-      p.holder.style.transform = `translate(${x.toFixed(1)}px,${((p.labelY - camY) * P).toFixed(1)}px)`;
-    });
+    [gateLabel, ...PLACES].forEach((p) => { p.holder.style.transform = `translate(${((p.labelX - camX) * P).toFixed(1)}px,${((p.labelY - camY) * P).toFixed(1)}px)`; });
   }
 
   /* ---------- 이용 안내 ---------- */
