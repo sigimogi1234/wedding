@@ -355,7 +355,7 @@
       },
     },
     {
-      key: 'when', sign: '시계탑', nav: '날짜·시간', icon: 'clock', s: 2380, dist: -1, door: 'V', w: 72, d: 72, h: 170, top: 66,
+      key: 'when', sign: '시계탑', nav: '일정', icon: 'clock', s: 2380, dist: -1, door: 'V', w: 72, d: 72, h: 170, top: 66,
       draw(a) {
         a.box(0, 0, 72, 72, 0, 176, '#fff0c8');
         a.quad('V', 0, 72, 0, 10, '#ecd49a'); a.quad('U', 0, 72, 0, 10, '#f3dda6');
@@ -393,7 +393,7 @@
       },
     },
     {
-      key: 'gift', sign: '은행', nav: '마음 전하실 곳', icon: 'heart', s: 1320, dist: 1, door: 'U', w: 120, d: 120, h: 86, top: 44,
+      key: 'gift', sign: '은행', nav: '계좌번호', icon: 'heart', s: 1320, dist: 1, door: 'U', w: 120, d: 120, h: 86, top: 44,
       draw(a) {
         a.box(0, 0, 120, 120, 0, 86, '#f6efff');
         a.quad('U', 0, 120, 0, 9, '#ddd0f2'); a.quad('V', 0, 120, 0, 9, '#cfc0ea');
@@ -405,7 +405,7 @@
       },
     },
     {
-      key: 'guestbook', sign: '우체국', nav: '방명록 쓰기', icon: 'letter', s: 1100, dist: -1, door: 'V', w: 120, d: 100, h: 80, top: 48,
+      key: 'guestbook', sign: '우체국', nav: '방명록', icon: 'letter', s: 1100, dist: -1, door: 'V', w: 120, d: 100, h: 80, top: 48,
       draw(a) {
         a.box(0, 0, 120, 100, 0, 80, '#fbf3df');
         a.quad('V', 0, 120, 0, 8, '#e3cfa6'); a.quad('U', 0, 100, 0, 8, '#ecdab4');
@@ -1007,7 +1007,7 @@
 
   /* ---------- 걷기와 입장 ---------- */
   const actBtn = document.getElementById('act'), placesBtn = document.getElementById('places');
-  function renderPlacesBtn() { placesBtn.textContent = `★ 둘러본 곳 ${visited.size}/${PLACES.length}`; }
+  function renderPlacesBtn() { placesBtn.textContent = `둘러본 곳 ${visited.size}/${PLACES.length}`; }
   renderPlacesBtn();
   let dest = null;
   function clearRoute() { path = []; stuck = 0; if (goal) goal.plaque.classList.remove('target'); goal = null; dest = null; }
