@@ -67,6 +67,7 @@
   #recenter { position: absolute; z-index: 20; left: 10px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
   #places { white-space: nowrap; padding: 0 10px; font-size: 12px; }
   .rcol { display: flex; flex-direction: column; align-items: flex-end; }
+  .lang-btn { min-width: 52px; padding: 0 8px; font-size: 12px; }
   .lang-menu { position: absolute; z-index: 49; top: calc(56px + env(safe-area-inset-top, 0px)); right: 10px; display: grid; padding: 6px; background: #fff; box-shadow: var(--border); }
   .lang-menu .pbtn { justify-content: flex-start; min-width: 108px; }
   .lang-menu .pbtn[aria-pressed="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
@@ -145,7 +146,7 @@
   <div class="top">
     <div class="row"><button class="pbtn icon" id="music"></button><button class="pbtn icon" id="guide">?</button></div>
     <div class="mark" id="mark"></div>
-    <div class="rcol"><button class="pbtn" id="places"></button><button class="pbtn icon" id="lang"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h3v1H3zM1 1h2v1H1zM6 1h2v1H6zM0 2h1v5H0zM8 2h1v5H8zM1 7h2v1H1zM6 7h2v1H6zM3 8h3v1H3zM4 1h1v7H4zM1 4h7v1H1zM2 2h1v1H2zM6 2h1v1H6zM2 6h1v1H2zM6 6h1v1H6z" fill="currentColor"/></svg></button></div>
+    <div class="rcol"><button class="pbtn" id="places"></button><button class="pbtn lang-btn" id="lang"></button></div>
   </div>
   <div class="lang-menu" id="lang-menu" hidden><button class="pbtn" data-l="ko">한국어</button><button class="pbtn" data-l="en">English</button></div>
   <div class="dialog" id="dialog" role="status"><p id="dialog-text"></p><small id="dialog-name"></small></div>
@@ -162,7 +163,7 @@
       <button class="seal" id="seal" aria-label="Open"><canvas id="seal-art"></canvas></button>
     </div>
     <p class="env-note" id="env-note"></p>
-    <div class="lang-pick" id="lang-pick"><button class="pbtn icon" id="lang-intro"><svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h3v1H3zM1 1h2v1H1zM6 1h2v1H6zM0 2h1v5H0zM8 2h1v5H8zM1 7h2v1H1zM6 7h2v1H6zM3 8h3v1H3zM4 1h1v7H4zM1 4h7v1H1zM2 2h1v1H2zM6 2h1v1H6zM2 6h1v1H2zM6 6h1v1H6z" fill="currentColor"/></svg></button></div>
+    <div class="lang-pick" id="lang-pick"><button class="pbtn lang-btn" id="lang-intro"></button></div>
     <div id="paper">
       <div class="leaf l"></div><div class="leaf r"></div>
       <div class="frame"></div>
@@ -216,7 +217,7 @@
       W.setLang(b.dataset.l);
     });
   });
-  ['lang', 'lang-intro'].forEach((id) => { $(id).setAttribute('aria-label', 'Language / 언어'); $(id).addEventListener('click', (e) => { e.stopPropagation(); langMenu.hidden = !langMenu.hidden; }); });
+  ['lang', 'lang-intro'].forEach((id) => { $(id).textContent = W.EN ? 'EN ▾' : 'KO ▾'; $(id).setAttribute('aria-label', 'Language / 언어'); $(id).addEventListener('click', (e) => { e.stopPropagation(); langMenu.hidden = !langMenu.hidden; }); });
   document.addEventListener('click', (e) => { if (!langMenu.hidden && !langMenu.contains(e.target)) langMenu.hidden = true; });
   $('zoom-in').setAttribute('aria-label', W.t('확대', 'Zoom in'));
   $('zoom-out').setAttribute('aria-label', W.t('축소', 'Zoom out'));
@@ -494,7 +495,7 @@
   const hash = (x, y) => { let h = (x * 374761393 + y * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177 | 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
   const circlePts = (cx, cy, rx, ry, n = 24) => Array.from({ length: n }, (_, i) => [cx + Math.cos(i / n * Math.PI * 2) * rx, cy + Math.sin(i / n * Math.PI * 2) * ry]);
   // 마을 입구(아래쪽)에는 아치와 연못, 꽃밭을 둔다
-  const GATE_S = 2990, POND = { s: 3250, d: 250 }, FIELD = { s: 3230, d: -250 }, GUEST_PLAZA = { s: 700, d: -740, r: 300 };
+  const GATE_S = 2990, POND = { s: 3250, d: 250 }, FIELD = { s: 3230, d: -250 }, GUEST_PLAZA = { s: 250, d: -760, r: 300 };
   const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
   const CLUSTERS = [[2490, 370], [2490, -370], [2170, -380], [1850, 380], [1700, -430], [1530, 390], [1210, -370], [1100, 420], [900, 400], [640, -420], [2860, 350], [2860, -350], [400, 320], [2250, 440], [1400, -460]];
   // 왼쪽 숲 사이로 흐르는 개울
@@ -996,7 +997,7 @@
   function zoomLevels() { const dpr = window.devicePixelRatio || 1, lo = Math.max(1, Math.round(dpr)), hi = Math.max(lo + 1, Math.round(dpr * 3)); return [lo, hi]; }
   function resize() {
     const dpr = window.devicePixelRatio || 1, [lo, hi] = zoomLevels();
-    if (!zoomS) zoomS = Math.round(dpr * 1.5);
+    if (!zoomS) zoomS = Math.round(dpr * 1.5) - 1;
     zoomS = Math.max(lo, Math.min(hi, zoomS));
     P = zoomS / dpr;
     Wa = Math.ceil(app.clientWidth / P); Ha = Math.ceil(app.clientHeight / P);
